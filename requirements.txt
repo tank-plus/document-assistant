@@ -1,0 +1,10 @@
+xlrd
+openpyxl
+pillow
+Flask 
+Flask-SQLAlchemy
+Flask-WTF
+pydantic
+inflect
+xlsxwriter
+flask-restx

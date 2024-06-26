@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">对话助手</h1>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <!-- DIRECT CHAT -->
+                <div class="card direct-chat direct-chat-primary">
+                    
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages" style="height: 1024px;padding: 50px;">
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ url_for('static', filename='dist/img/user1-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    帮我查下未确认的订单列表
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    <p>好的，为您找到未确认的订单列表</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>PI#</th>
+                                                <th>PO#</th>
+                                                <th>采购商品</th>
+                                                <th>总金额</th>
+                                                <th>确认</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>PIXXXXX</td>
+                                                <td>POxxxxxx</td>
+                                                <td></td>
+                                                <td>$12,300.00</td>
+                                                <td><button class="btn btn-default btn-sm">确认</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PIXXXXX</td>
+                                                <td>POxxxxxx</td>
+                                                <td></td>
+                                                <td>$12,300.00</td>
+                                                <td><button class="btn btn-default btn-sm">确认</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PIXXXXX</td>
+                                                <td>POxxxxxx</td>
+                                                <td></td>
+                                                <td>$12,300.00</td>
+                                                <td><button class="btn btn-default btn-sm">确认</button></td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ url_for('static', filename='dist/img/user1-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    帮我确认订单OU12345678
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-infos clearfix">
+                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                </div>
+                                <!-- /.direct-chat-infos -->
+                                <img class="direct-chat-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}" alt="message user image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    <p>好的，订单OU12345678已经确认，生成附件</p>
+                                    <p><a href="#">附件 PI12345678.xlsx</a></p>
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            
+
+                             
+
+                        </div>
+                        <!--/.direct-chat-messages-->
+
+                        <!-- Contacts are loaded here -->
+                        <div class="direct-chat-contacts">
+                            <ul class="contacts-list">
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Count Dracula
+                                                <small class="contacts-list-date float-right">2/28/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">How have you been? I was...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Sarah Doe
+                                                <small class="contacts-list-date float-right">2/23/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">I will be waiting for...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Nadia Jolie
+                                                <small class="contacts-list-date float-right">2/20/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">I'll call you back at...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Nora S. Vans
+                                                <small class="contacts-list-date float-right">2/10/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Where is your new...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                John K.
+                                                <small class="contacts-list-date float-right">1/27/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Can I take a look at...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                                <li>
+                                    <a href="#">
+                                        <img class="contacts-list-img" src="{{ url_for('static', filename='dist/img/user3-128x128.jpg') }}"
+                                            alt="User Avatar">
+
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                                Kenneth M.
+                                                <small class="contacts-list-date float-right">1/4/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Never mind I found...</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                            </ul>
+                            <!-- /.contacts-list -->
+                        </div>
+                        <!-- /.direct-chat-pane -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-primary">Send</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!--/.direct-chat -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

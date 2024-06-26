@@ -1,0 +1,123 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>商检报关</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="callout callout-info" style="font-size: 12px;">
+                    <h5><i class="fas fa-info"></i> Note:</h5>
+                    商检报关来自于同样的订单列表，先进行商检，商检完成后再报关，如果没有配件商检和报关的excel内容一样，否则报关单会包含配件。
+                    商检关心金额，报关关心体积和重量
+                </div>
+
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <p style="padding: 20px 0px 0px 20px;">
+                            <a href="/inspectdeclaration/add" class="btn btn-default btn-sm" style="font-size: 12px;">新建商检报关</a>
+                        </p>
+                        <table class="table table-bordered" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>PI#</th>
+                                    <th>PO#</th>
+                                    <th>PO DATE</th>
+                                    <th>客户</th>
+                                    <th>采购商品</th>
+                                    <th>PAYMENT</th>
+                                    <th>DELIVERY DATA</th>
+                                    <th>LOADING PORT</th>
+                                    <th>DESTINATION PORT</th>
+                                    <th>提运单号</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.alias_name }}</td>
+                                    <td>{{ item.short_name }}</td>
+                                    <td>{{ item.address }}</td>
+                                    <td>{{ item.country }}</td>
+                                    <td>{{ item.country_short_name }}</td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">商检预览</button>
+                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">报送预览</button>
+                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button>
+                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</button>
+                                        <button type="button" class="btn btn-default btn-sm record-delete" style="font-size: 12px;" data-id="{{ item.id }}">删除</button>
+                                        
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(".record-delete").click(function() {
+        var id = $(this).data("id");
+        $("#btn-confirm-delete").data("id", id);
+        $("#modal-default").modal("show");
+    });
+</script>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">消息提示</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="delete-form" method="POST">
+                <p>确认删除客户?</p>
+            </form>
+        </div>
+        <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger btn-sm" id="btn-confirm-delete">确认</button>
+            <script>
+                $("#btn-confirm-delete").click(function() {
+                    var id = $(this).data("id");
+                    $("#delete-form").attr("action", "/{entity_name_lower}/delete/" + id);
+                    $("#delete-form").submit();
+                    $("#modal-default").modal("hide");
+                });
+            </script>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+{% endblock %}
