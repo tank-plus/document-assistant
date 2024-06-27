@@ -28,8 +28,10 @@ with app.app_context():
 # api接口定义
 from flask_restx import Api
 from api.order import order_ns
+from api.chatbot import chatbot_ns
 api = Api(app, version='1.0', title='单证自助系统', description='单证自助系统API')
-api.add_namespace(order_ns) 
+api.add_namespace(order_ns)
+api.add_namespace(chatbot_ns)
 # 以上是api接口定义
 
  
@@ -117,4 +119,4 @@ app.register_blueprint(user_bp, url_prefix='/user')
 # 以上是业务路由定义
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(debug=True, host='0.0.0.0', port=8888)

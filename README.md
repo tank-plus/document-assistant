@@ -14,17 +14,17 @@ pip install --no-index --find-links=./pkgs -r requirements.txt
 ```
 
 
-
 # 使用方法
+```bash
 pip install --no-index --find-links=./pkgs -r requirements.txt 
+python app.py
+```
 
-1. template存放各个单据的模板，**需要是xlsx格式的excel文件**
-2. 数据.xlsx包含4个sheet
-   1. 基本信息 第一列填变量名称 第二列填变量值，模板文件里的{{变量名称}}统一会被替换成具体的值
-   2. FIREPLACE_MANTEL FIREPLACE_MANTEL产品列表，每一行记录一条实际记录，具体看哪个值需要汇总，之后模板内的{{TOTAL_FIREPLACE_MANTEL}}会被具体值替换
-   3. FIREPLACE_MANTEL_TOP 同上一步，之后模板内的{{TOTAL_FIREPLACE_MANTEL_TOP}}会被具体值替换
-   4. WOOD_REPAIR_PASTE 同上一步，之后模板内的{{TOTAL_WOOD_REPAIR_PASTE}}会被具体值替换
-   5. 客户信息 每一行代表一个客户信息，备用
+
+# 业务流程
+![alt](process.png)
+
+
 
 # 问题
 1. 图片为丢失，需要生成后单独添加 安装pillow后就可以保留图片
@@ -48,8 +48,8 @@ ws.add_image(img, 'A1')  # 把图片添加到A1单元格的位置
 wb.save('example_with_picture.xlsx')
 ```
 
-
-# 需要理解
+# 业务访谈
+```bash
 商品列表是明确，一个PI可能是很多个商品的组合 
 每个商品包含一个
 包数
@@ -85,8 +85,6 @@ TOTAL AMOUNT	SAY US DOLLARS THIRTY THOUSAND FOUR HUNDRED AND SEVENTY EIGHT CENTS
 
 
 
-
-
 收到订单
 
 *** 出单据阶段1
@@ -103,7 +101,6 @@ Date
 To
 Add
 Tex/Fax 根据客户信息来选取进行替换，目前就两个客户，需要维护一个客户列表
-
 
 
 商品管理 H.S.Code
@@ -174,23 +171,14 @@ CI PL的地址需要用实际的收货地址，即跟商检和报关时的一致
 CI PL需要加一句话 40 CFR part 770 compliant for formaldehyde
 
 出货清单 跟集装箱走
+2、报关单也可以EXCEL格式，内容主要跟报关单据走的，加入提单号、贸易国、运抵国、指运港、目的国等信息
+      一个订单报一票时，合同协议号就时P/I NO., 多个订单报一票时，合同协议号选择一个P/I NO.
+   这里的件数指总箱数，毛重指总毛重，净重指总净重
 
+3、小方格里时申报要素，有配件时，配件单独一行申报，并附上配件的申报要素
 
-
-
-
-
-   # Backup
-   2、报关单也可以EXCEL格式，内容主要跟报关单据走的，加入提单号、贸易国、运抵国、指运港、目的国等信息
-         一个订单报一票时，合同协议号就时P/I NO., 多个订单报一票时，合同协议号选择一个P/I NO.
-      这里的件数指总箱数，毛重指总毛重，净重指总净重
-
-   3、小方格里时申报要素，有配件时，配件单独一行申报，并附上配件的申报要素
-
-   4、出货清单Packing Slip: 需要列清颜色和数量
-         这里的客户地址通常为指定的某一个仓库地址
-
-
+4、出货清单Packing Slip: 需要列清颜色和数量
+      这里的客户地址通常为指定的某一个仓库地址
 
 最终的输出单拒
 
@@ -198,9 +186,8 @@ The Seller 放图片
 The Buyer  留空，不要了
 
 
-
-
 1. 一个产品一个颜色
 变量有10几个，统一加到数据.xlsx中
 数据给商检、海关各一份，数据汇总会有不同
 柜分两个款式，数量相加，需要有计算公式
+```
