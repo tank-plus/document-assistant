@@ -46,7 +46,19 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="PO DATE" name="po_date" required/>
+                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" placeholder="PO DATE" name="po_date" required/>
+                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#reservationdate').datetimepicker({
+                                                        format: 'YYYY-MM-DD'
+                                                    });
+                                                });
+                                            </script>
                                         </div>
                                         <div class="col-md-4">
                                             <input class="form-control form-control-sm" type="text" placeholder="PAMENT METHOD" name="payment_method" required/>

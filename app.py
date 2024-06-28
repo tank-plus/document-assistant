@@ -17,6 +17,7 @@ from model.product import *
 from model.order import *
 from model.inspect import *
 from model.clearance import *
+from model.address import *
 # 以上是Model定义
 
 
@@ -119,4 +120,4 @@ app.register_blueprint(user_bp, url_prefix='/user')
 # 以上是业务路由定义
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8888)
+    app.run(debug=True, host='0.0.0.0', port=9090)
