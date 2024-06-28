@@ -109,7 +109,7 @@ from route.order import order_bp
 app.register_blueprint(order_bp, url_prefix='/order')
 
 from route.inspect import inspect_bp
-app.register_blueprint(inspect_bp, url_prefix='/inspectdeclaration')
+app.register_blueprint(inspect_bp, url_prefix='/inspect')
 
 from route.clearance import clearance_bp
 app.register_blueprint(clearance_bp, url_prefix='/clearance')

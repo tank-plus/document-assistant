@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>新建客户</h1>
+                <h1>新建订单</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -22,17 +22,23 @@
                     <!-- /.card-header -->
                     <div class="card-body p-0">
                         <div class="card-body">
-                            <form action="/{entity_name_lower}/save" method="post">
+                            <form action="/order/save" method="post">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="客户名称" name="customer_id" required/>
+                                            <input class="form-control form-control-sm" type="text" placeholder="订单编号" name="po_num" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="客户别名" name="alias_name" required/>
+                                            <!-- <input class="form-control form-control-sm" type="text" placeholder="客户别名" name="alias_name" required/> -->
+                                             <select class="form-control form-control-sm" name="customer_id" required>
+                                                <option value="">请选择客户</option>
+                                                {% for customer in customers %}
+                                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                {% endfor %}
+                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="名称缩写" name="short_name" required/>
+                                            <input class="form-control form-control-sm" type="text" placeholder="PI#" name="pi_num" required/>
                                         </div>
                                     </div>
                                     
@@ -40,24 +46,68 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="国家" name="country" required/>
+                                            <input class="form-control form-control-sm" type="text" placeholder="PO DATE" name="po_date" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="国家缩写" name="country_short_name" required/>
+                                            <input class="form-control form-control-sm" type="text" placeholder="PAMENT METHOD" name="payment_method" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax" name="tel_fax"/>
+                                            <input class="form-control form-control-sm" type="text" placeholder="DELIVERY DATE(交货时间)" name="delivery_date" required/>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-sm" type="text" placeholder="总部地址" name="address" required/>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="LAODING PORT" name="port_of_loading" required/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="DESTINATION PORT" name="port_of_destination" required/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="CTN SIZE QTY" name="ctn_size_qty" required/>
                                         </div>
                                     </div>   
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="装运单号(可选)" name="billing_of_loading_num"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="集装箱编号(可选)" name="ctn_num"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="SEAL NUMBER(可选)" name="seal_num"/>
+                                        </div>
+                                    </div>   
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="LOT" name="lot"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="车间(可选)" name="workshop"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control form-control-sm" type="text" placeholder="批次(可选)" name="batch_num"/>
+                                        </div>
+                                    </div>   
+                                </div>
+
+                                <!--商品-->
+
+
+                                <!--附件-->
+
+
+                                <!--托盘-->
+
+
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -65,44 +115,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-4"><h5 style="display: inline;">收货地址</h5> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> 新增收货地址</button></div>
-                                
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地名称"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地址"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax"/> 
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地名称"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地址"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax"/>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
+
+
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
