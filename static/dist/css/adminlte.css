@@ -2341,7 +2341,7 @@ textarea.form-control {
 }
 
 .invalid-feedback {
-  display: none;
+  /* display: none; */
   width: 100%;
   margin-top: 0.25rem;
   font-size: 80%;
@@ -21392,9 +21392,6 @@ body.text-sm .control-sidebar {
   line-height: calc(1.8125rem + 2px);
 }
 
-label:not(.form-check-label):not(.custom-file-label) {
-  font-weight: 700;
-}
 
 .warning-feedback {
   font-size: 80%;

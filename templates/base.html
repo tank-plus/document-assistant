@@ -5,15 +5,35 @@
     <title>单据自助系统V1.0</title>
     <!-- 引入AdminLTE的CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.css') }}">
-    <!-- 引入依赖的CSS文件，例如Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.css') }}">
-    <!-- 如果有自定义的CSS，也可以在这里引入 -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css')}}">
+    
+
     <!-- jQuery -->
-    <script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{ url_for('static', filename='plugins/select2/js/select2.full.min.js')}}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="{{ url_for('static', filename='plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <!-- InputMask -->
+    <script src="{{ url_for('static', filename='plugins/moment/moment.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+    <!-- date-range-picker -->
+    <script src="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.js')}}"></script>
+    <!-- bootstrap color picker -->
+    <script src="{{ url_for('static', filename='plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{ url_for('static', filename='plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{ url_for('static', filename='plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+    <!-- BS-Stepper -->
+    <script src="{{ url_for('static', filename='plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+    <!-- dropzonejs -->
+    <script src="{{ url_for('static', filename='plugins/dropzone/min/dropzone.min.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dist/js/adminlte.min.js')}}"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -69,26 +89,10 @@
                     </div>
                 </div>
 
-                <!-- SidebarSearch Form -->
-                <!-- <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> -->
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                       
                         <li class="nav-item">
                             <a href="/index" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
