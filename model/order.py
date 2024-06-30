@@ -25,7 +25,7 @@ class Order(db.Model):
 class OrderDetail(db.Model):
     order_id = db.Column(db.String(36), db.ForeignKey('order.po_num'), primary_key=True) # 订单编号
     product_id = db.Column(db.String(36), db.ForeignKey('product.id'), primary_key=True) # 产品编号
-    qty = db.Column(db.Float, unique=False, nullable=False) # 数量
+    qty = db.Column(db.Integer, unique=False, nullable=False) # 数量
     type = db.Column(db.String(80), unique=False, nullable=False) # 类型 普通商品/配件
     
     def __repr__(self):
@@ -40,7 +40,7 @@ class Pallet(db.Model): # 托盘没有价格，有体积、净重和重
     nw_kgs = db.Column(db.Float, unique=False, nullable=False) # 净重
     gw_kgs = db.Column(db.Float, unique=False, nullable=False) # 毛重
     mt_cmb = db.Column(db.Float, unique=False, nullable=False) # 体积
-    qty = db.Column(db.Float, unique=False, nullable=False) # 数量
+    qty = db.Column(db.Integer, unique=False, nullable=False) # 数量
     total_mt_cmb = db.Column(db.Float, unique=False, nullable=False) # 总体积
     total_nw_kgs = db.Column(db.Float, unique=False, nullable=False) # 总净重
     total_gw_kgs = db.Column(db.Float, unique=False, nullable=False) # 总毛重
