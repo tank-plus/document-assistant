@@ -1,4 +1,5 @@
 from model.db import db
+from core.constant import *
 
 class Order(db.Model):
     po_num = db.Column(db.String(36), primary_key=True) # 订单编号
@@ -16,7 +17,18 @@ class Order(db.Model):
     lot = db.Column(db.String(80), unique=False, nullable=False) # 批号
     workshop = db.Column(db.String(80), unique=False, nullable=False) # 车间名
     batch_num = db.Column(db.String(80), unique=False, nullable=False) # 批号
+    status = db.Column(db.String(80), unique=False, nullable=False) # 订单状态
     remarks = db.Column(db.String(4096), unique=False, nullable=True)
+    
+    
+    def update_status(self, status):
+        self.status = status
+        db.session.commit()
+        
+    def confirm(self):
+        # TODO 根据模板生成excel
+        self.status = ORDER_STATUS_CONFIRMED
+        db.session.commit()
     
     def __repr__(self):
         return '<Order %r>' % self.po_num
