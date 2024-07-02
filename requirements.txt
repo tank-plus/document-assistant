@@ -8,3 +8,4 @@ pydantic
 inflect
 xlsxwriter
 flask-restx
+pywin32

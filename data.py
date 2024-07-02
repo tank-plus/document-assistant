@@ -8,48 +8,51 @@ CUSTOMER = []
 
 
 # 加载Excel文件
-workbook = load_workbook(filename='数据.xlsx', data_only=True)  # 替换为你的Excel文件名
+workbook = load_workbook(filename='order_pi_template.xlsx', data_only=False)  # 替换为你的Excel文件名
 
 # 遍历所有sheet
 for sheet_name in workbook.sheetnames:
+
+    description_row = None
     print(f"正在处理Sheet: {sheet_name}")
     
-    
-    sheet = workbook[sheet_name]
 
-    if "基本信息" == sheet_name:
-        # 遍历sheet中的所有行和单元格
-        for row in sheet.iter_rows(min_row=1, max_col=sheet.max_column, max_row=sheet.max_row, values_only=False):
-            BASIC["{{" + row[0].value + "}}"] = row[1].value
-        print(BASIC)
+    if sheet_name == 'PI':
+    
+        sheet = workbook[sheet_name]
+
         
-    if "FIREPLACE_MANTEL" == sheet_name:
-        index = 0
-        for row in sheet.iter_rows(min_row=1, max_col=sheet.max_column, max_row=sheet.max_row, values_only=False):
-            record = []
+
+        for row in sheet.iter_rows():
             for cell in row:
-                record.append(cell.value)
-            FIREPLACE_MANTEL.append(record)
-            index = index + 1
-        print(FIREPLACE_MANTEL)
+                # 查找Description所在的行
+                if cell.value == "Description":
+                    description_row = cell.row
+                    break
+            
         
-        
-    if "FIREPLACE_MANTEL_TOP" == sheet_name:
-        index = 0
-        for row in sheet.iter_rows(min_row=1, max_col=sheet.max_column, max_row=sheet.max_row, values_only=False):
-            record = []
-            for cell in row:
-                record.append(cell.value)
-            FIREPLACE_MANTEL_TOP.append(record)
-            index = index + 1
-        print(FIREPLACE_MANTEL_TOP)
-        
-    if "客户信息" == sheet_name:
-        index = 0
-        for row in sheet.iter_rows(min_row=1, max_col=sheet.max_column, max_row=sheet.max_row, values_only=False):
-            record = []
-            for cell in row:
-                record.append(cell.value)
-            CUSTOMER.append(record)
-            index = index + 1
-        print(CUSTOMER)
+        if description_row:
+            new_data =[
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00']
+            ]
+            sheet.insert_rows(description_row + 2, len(new_data))  # 插入行
+
+            # 拆分单元格
+            # for row in range(description_row + 3, description_row + 3 + len(new_data)-1):
+            #     range_name = f"B{row}:E{row}"
+            #     print(f"正在处理行: {range_name}")
+            #     sheet.unmerge_cells(range_name)
+
+
+            for i, data_row in enumerate(new_data, start=description_row + 2):
+                for j, value in enumerate(data_row, start=1):
+                    sheet.cell(row=i, column=j, value=value)
+
+            
+# 保存Excel文件
+workbook.save('output_with_description.xlsx')
