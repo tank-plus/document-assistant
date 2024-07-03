@@ -67,6 +67,14 @@ The Buyer  留空，不要了
 
 ```
 
+# 注册成windows服务
+```bash
+python flask_service.py install
+python flask_service.py start
+python flask_service.py stop
+python flask_service.py remove
+```
+
 
 # 问题
 1. 图片为丢失，需要生成后单独添加 安装pillow后就可以保留图片
