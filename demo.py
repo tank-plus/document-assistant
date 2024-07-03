@@ -103,6 +103,8 @@ from openpyxl.utils import get_column_letter
 wb = openpyxl.Workbook()
 ws = wb.active
 
+ws.title = "PI"
+
 # 定义字体和对齐方式
 font18_bold = Font(size=18, bold=True)
 font16_black = Font(size=16, name="黑体")
@@ -254,7 +256,7 @@ for item in data:
 
 # "The Seller" 放图片
 img = Image("logo.png")
-ws.add_image(img, 'A18')
+ws.add_image(img, 'B48')
 
 # 保存文件
 wb.save('formatted_excel.xlsx')
