@@ -1,7 +1,8 @@
 from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
-from openpyxl.styles import Alignment
+from openpyxl.styles import Alignment, Font
 from openpyxl.styles import Border, Side
+from core.util import *
 
 BASIC = {}
 FIREPLACE_MANTEL = []
@@ -15,6 +16,9 @@ thin_border = Border(
     top=Side(style='thin'),
     bottom=Side(style='thin')
 )
+
+# 定义字体
+font12_bold = Font(size=12, bold=True, name="Times New Roman")
 
 
 
@@ -33,26 +37,35 @@ for sheet_name in workbook.sheetnames:
         sheet = workbook[sheet_name]
 
         
-
         for row in sheet.iter_rows():
             for cell in row:
                 # 查找Description所在的行
                 if cell.value == "Description":
                     description_row = cell.row
-                    break
+                
+                if cell.value and "The Seller:" in str(cell.value):
+                    picture_row = cell.row
+                    print(f"picture_row:{picture_row}")
             
         
         if description_row:
             new_data =[
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00'],
-                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS','$111.20','$13,344.00']
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00],
+                ['FIREPLACE MANTEL', '13058-X-VBM', '120PCS/120CTNS',111.20,13344.00]
             ]
             sheet.insert_rows(description_row + 2, len(new_data))  # 插入行
 
+        
         # 拆分数据区域内的合并单元格
         list=[]
         for cell_range in sheet.merged_cells:
@@ -73,6 +86,7 @@ for sheet_name in workbook.sheetnames:
                 cell = sheet.cell(row=i, column=j)
                 cell.value = value
                 cell.border = thin_border
+                cell.number_format = '$#,##0.00'
             
         total_row = description_row + 2 + len(new_data)
         
@@ -81,19 +95,26 @@ for sheet_name in workbook.sheetnames:
         
         
         total_cell1 = sheet.cell(row=total_row, column=1)
-        total_cell1.value = 'Total'
+        total_cell1.value = 'TOTAL:'
         total_cell1.border = thin_border
+        total_cell1.font = font12_bold
+        total_cell1.alignment = Alignment(horizontal='right', vertical='center')
         
         total_cell3 = sheet.cell(row=total_row, column=3)
-        total_cell3.value = '120'
+        total_cell3.value = 120
+        total_cell3.number_format = '$#,##0.00'
         total_cell3.border = thin_border
         total_cell5 = sheet.cell(row=total_row, column=5)
-        total_cell5.value = '$13,344.00'
+        total_cell5.value = 13344.00
         total_cell5.border = thin_border
+        total_cell5.number_format = '$#,##0.00'
        
         sheet.merge_cells(start_row=total_row, start_column=1, end_row=total_row, end_column=2)
+
+        # TODO 金额相关的列合并
+        amount = 13344.22
         
-        sheet.cell(row=total_row + 1, column=2, value='SAY US DOLLARS THIRTY THOUSAND FOUR HUNDRED AND SEVENTY EIGHT CENTS TEN ONLY.')
+        sheet.cell(row=total_row + 1, column=2, value=number_to_words(amount))
         sheet.merge_cells(f"B{total_row + 1}:E{total_row + 1}")
         cell = sheet[f'B{total_row + 2}']
         cell.alignment = Alignment(horizontal='center', vertical='center')
@@ -101,9 +122,9 @@ for sheet_name in workbook.sheetnames:
         
         
         
-        
-        sheet.merge_cells("A16:A21")
-        cell_new = sheet["A16"]
+        # TODO 类别相关的列合并
+        sheet.merge_cells(f"A{description_row + 2}:A{description_row + 1+ len(new_data)}")
+        cell_new = sheet[f"A{description_row + 2}"]
         cell_new.alignment = Alignment(horizontal='center', vertical='center')
         
         
@@ -113,7 +134,7 @@ for sheet_name in workbook.sheetnames:
         img.width = 200  # 设置宽度为100像素
         img.height = 100  # 设置高度为100像素
         
-        sheet.add_image(img,'B41')
+        sheet.add_image(img,f'B{picture_row + len(new_data) + 1}')
         
             
 # 保存Excel文件
