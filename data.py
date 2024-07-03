@@ -3,6 +3,8 @@ from openpyxl.drawing.image import Image
 from openpyxl.styles import Alignment, Font
 from openpyxl.styles import Border, Side
 from core.util import *
+from openpyxl.cell.text import InlineFont
+from openpyxl.cell.rich_text import TextBlock, CellRichText
 
 BASIC = {}
 FIREPLACE_MANTEL = []
@@ -19,6 +21,7 @@ thin_border = Border(
 
 # 定义字体
 font12_bold = Font(size=12, bold=True, name="Times New Roman")
+font10_common = Font(size=10, name="Times New Roman")
 
 
 
@@ -87,6 +90,7 @@ for sheet_name in workbook.sheetnames:
                 cell.value = value
                 cell.border = thin_border
                 cell.number_format = '$#,##0.00'
+                cell.font = font10_common
             
         total_row = description_row + 2 + len(new_data)
         
@@ -126,7 +130,19 @@ for sheet_name in workbook.sheetnames:
         sheet.merge_cells(f"A{description_row + 2}:A{description_row + 1+ len(new_data)}")
         cell_new = sheet[f"A{description_row + 2}"]
         cell_new.alignment = Alignment(horizontal='center', vertical='center')
-        
+
+
+        rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman',u='single'), 'Real Flame Company Inc.'))
+        rich_text_a8.font = Font(size=12, bold=True, name="Times New Roman")
+        sheet["A8"] = rich_text_a8      
+
+        rich_text_a9 = CellRichText('Add:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), ' 7800 Northwestern Avenue, Racine, WI 53406'))
+        rich_text_a9.font = Font(size=12, bold=True, name="Times New Roman")
+        sheet["A9"] = rich_text_a9
+
+        rich_text_a10 = CellRichText('Tel/Fax:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), '800 6541704'))
+        rich_text_a10.font = Font(size=12, bold=True, name="Times New Roman")
+        sheet["A10"] = rich_text_a10   
         
         img = Image('logo.png')  # 替换为图片文件的路径
 
