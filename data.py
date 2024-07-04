@@ -22,6 +22,7 @@ thin_border = Border(
 # 定义字体
 font12_bold = Font(size=12, bold=True, name="Times New Roman")
 font10_common = Font(size=10, name="Times New Roman")
+font10_bold_underline = Font(size=10, bold=True, underline='single', name="Times New Roman")
 
 
 
@@ -104,20 +105,22 @@ for sheet_name in workbook.sheetnames:
         total_cell1.font = font12_bold
         total_cell1.alignment = Alignment(horizontal='right', vertical='center')
         
-        total_cell3 = sheet.cell(row=total_row, column=3)
-        total_cell3.value = 120
-        total_cell3.number_format = '$#,##0.00'
-        total_cell3.border = thin_border
+        # total_cell3 = sheet.cell(row=total_row, column=3)
+        # total_cell3.value = 120
+        # total_cell3.number_format = '$#,##0.00'
+        # total_cell3.font = font10_bold_underline
+        # total_cell3.border = thin_border
+        
         total_cell5 = sheet.cell(row=total_row, column=5)
         total_cell5.value = 13344.00
         total_cell5.border = thin_border
         total_cell5.number_format = '$#,##0.00'
+        total_cell5.font = font10_bold_underline
        
         sheet.merge_cells(start_row=total_row, start_column=1, end_row=total_row, end_column=2)
 
         # TODO 金额相关的列合并
         amount = 13344.22
-        
         sheet.cell(row=total_row + 1, column=2, value=number_to_words(amount))
         sheet.merge_cells(f"B{total_row + 1}:E{total_row + 1}")
         cell = sheet[f'B{total_row + 2}']
