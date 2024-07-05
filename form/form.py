@@ -87,37 +87,75 @@ class OrderForm(FlaskForm):
         form.pallets = pallets
         return form
 
-    def build_order(self) -> Order:
-        order = Order()
-        for field in self:
-            if hasattr(order, field.name):
-                setattr(order, field.name, field.data)
-        order_details = []
-        for detail_form in self.order_details:
-            order_detail = OrderDetail()
-            order_detail.type = '商品'
-            for field in detail_form:
-                if hasattr(order_detail, field.name):
-                    setattr(order_detail, field.name, field.data)
-            order_details.append(order_detail)
-        order.order_details = order_details
+    def build_order(self) -> 'Order':
+        order = Order(
+            po_num=self.po_num.data,
+            customer_id=self.customer_id.data,
+            pi_num=self.pi_num.data,
+            po_date=self.po_date.data,
+            payment_method=self.payment_method.data,
+            delivery_date=self.delivery_date.data,
+            port_of_loading=self.port_of_loading.data,
+            port_of_destination=self.port_of_destination.data,
+            ctn_size_qty=self.ctn_size_qty.data,
+            billing_of_loading_num=self.billing_of_loading_num.data,
+            ctn_num=self.ctn_num.data,
+            seal_num=self.seal_num.data,
+            lot=self.lot.data,
+            workshop=self.workshop.data,
+            batch_num=self.batch_num.data,
+            remarks=self.remarks.data
+        )
+        
+        order.order_details = []
+        for order_detail_form in self.order_details:
+            order_detail = OrderDetail(
+                order_id=order.po_num,
+                product_id=order_detail_form.product_id.data,
+                product_model=order_detail_form.product_model.data,
+                qty=order_detail_form.qty.data,
+                type='商品',
+                unit_price=order_detail_form.unit_price.data,
+                ctns=order_detail_form.ctns.data,
+                total_price=order_detail_form.total_price.data,
+                nw_kgs=order_detail_form.nw_kgs.data,
+                mt_cmb=order_detail_form.mt_cmb.data
+            )
+            order.order_details.append(order_detail)
+            
+            
+        order.part_details = []
+        for part_detail_form in self.part_details:
+            part_detail = OrderDetail(
+                order_id=order.po_num,
+                product_id=part_detail_form.product_id.data,
+                product_model=part_detail_form.product_model.data,
+                qty=part_detail_form.qty,
+                type='配件',
+                unit_price=part_detail_form.unit_price.data,
+                ctns=part_detail_form.ctns.data,
+                total_price=part_detail_form.total_price.data,
+                nw_kgs=part_detail_form.nw_kgs.data,
+                mt_cmb=part_detail_form.mt_cmb.data
+            )
+            order.part_details.append(part_detail)
 
-        part_details = []
-        for detail_form in self.part_details:
-            order_detail = OrderDetail()
-            order_detail.type = '配件'
-            for field in detail_form:
-                if hasattr(order_detail, field.name):
-                    setattr(order_detail, field.name, field.data)
-            part_details.append(order_detail)
-        order.part_details = part_details
-
-        pallets = []
+        order.pallets = []
         for pallet_form in self.pallets:
-            pallet = Pallet()
-            for field in pallet_form:
-                if hasattr(pallet, field.name):
-                    setattr(pallet, field.name, field.data)
-            pallets.append(pallet)
-        order.pallets = pallets
+            pallet = Pallet(
+                order_id=order.po_num,
+                width=pallet_form.width.data,
+                height=pallet_form.height.data,
+                length=pallet_form.length.data,
+                nw_kgs=pallet_form.nw_kgs.data,
+                mt_cmb=pallet_form.mt_cmb.data,
+                qty=pallet_form.qty.data,
+                total_mt_cmb=pallet_form.total_mt_cmb.data,
+                total_nw_kgs=pallet_form.total_nw_kgs.data
+            )
+            order.pallets.append(pallet)
+            
         return order
+
+        
+

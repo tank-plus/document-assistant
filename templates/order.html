@@ -49,15 +49,17 @@
                             <tbody>
                                 {% for item in items %}
                                 <tr>
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.alias_name }}</td>
-                                    <td>{{ item.short_name }}</td>
-                                    <td>{{ item.address }}</td>
-                                    <td>{{ item.country }}</td>
-                                    <td>{{ item.country_short_name }}</td>
-                                    <td>
-
-                                    </td>
+                                    <td>{{ item.pi_num }}</td>
+                                    <td>{{ item.po_num }}</td>
+                                    <td>{{ item.po_date  }}</td>
+                                    <td>{{ item.lot }}</td>
+                                    <td>{{ item.customer_id }}</td>
+                                    <td>TODO 采购商品</td>
+                                    <td>{{ item.payment_method }}</td>
+                                    <td>{{ item.delivery_date }}</td>
+                                    <td>{{ item.port_of_loading }}</td>
+                                    <td>{{ item.port_of_destination }}</td>
+                                    <td>{{ item.status }}</td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">复制</button>
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">PI预览</button>
