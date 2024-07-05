@@ -3,7 +3,6 @@ from model.customer import Customer
 from model.db import db
 from route.common import login_required
 
-
 customer_bp = Blueprint('customer', __name__)
 
 
@@ -12,6 +11,7 @@ customer_bp = Blueprint('customer', __name__)
 def customer():
     customers = Customer.query.all()
     return render_template('customer.html', customers=customers)
+
 
 @customer_bp.route('/add')
 @login_required
@@ -29,10 +29,12 @@ def customer_save():
     address = request.form.get('address')
     tel_fax = request.form.get('tel_fax')
     remarks = request.form.get('remarks')
-    customer = Customer(id=customer_id, alias_name=alias_name, short_name=short_name, country=country, country_short_name=country_short_name,address=address, tel_fax=tel_fax, remarks=remarks)
+    customer = Customer(id=customer_id, alias_name=alias_name, short_name=short_name, country=country,
+                        country_short_name=country_short_name, address=address, tel_fax=tel_fax, remarks=remarks)
     db.session.add(customer)
     db.session.commit()
     return redirect(url_for('customer.customer'))
+
 
 @customer_bp.route('/delete/<customer_id>', methods=['POST'])
 def customer_delete(customer_id):
@@ -41,4 +43,3 @@ def customer_delete(customer_id):
         db.session.delete(customer)
         db.session.commit()
     return redirect(url_for('customer.customer'))
-

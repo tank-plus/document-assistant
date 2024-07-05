@@ -12,7 +12,7 @@ from route.common import login_required
 
 @{entity_name_lower}_bp.route('/')
 @login_required
-def {entity_name_lower}():
+def {entity_name_lower}_list():
     items = {entity_name}.query.all()
     return render_template('{entity_name_lower}.html', items=items)
 
