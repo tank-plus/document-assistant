@@ -58,43 +58,53 @@ def order():
 @order_bp.route('/add')
 @login_required
 def order_add():
-    return render_template('order_edit.html')
+    form = OrderForm()
+    form.order_details.append_entry(OrderDetailForm())
+    form.port_of_loading.data = 'NINGBO, CHINA'
+    form.port_of_destination.data = 'MONTREAL, CANADA'
+    form.pi_num.data = 'NBHB/RFC2331' # 当年的第N个订单
+    # form.part_details.append_entry(OrderDetailForm())
+    form.pallets.append_entry(PalletForm())
+    return render_template('order_submit.html', form=form)
     
     
 @order_bp.route('/order_submit', methods=['GET','POST'])
 @login_required
 def order_save():
     form = OrderForm()
-    if request.method == 'GET':
-        form.order_details.append_entry(OrderDetailForm())
-        form.part_details.append_entry(OrderDetailForm())
-        form.pallets.append_entry(PalletForm())
-    else:
-        order = Order(
-            # 主Order字段...
+    order = Order(
+        # 主Order字段...
+    )
+    # db.session.add(order)
+
+    for detail_form in form.order_details.data:
+        order_detail = OrderDetail(
+            order_id=order.po_num,  # 假设Order的PO编号是创建后立即可用的
+            product_id=detail_form['product_id'],
+            qty=detail_form['qty'],
+            type=detail_form['type']
         )
-        # db.session.add(order)
+        # db.session.add(order_detail)
+        
+    for part_form in form.part_details.data:
+        order_detail = OrderDetail(
+            order_id=order.po_num,  # 假设Order的PO编号是创建后立即可用的
+            product_id=part_form['product_id'],
+            qty=part_form['qty'],
+            type=part_form['type']
+        )
 
-        for detail_form in form.order_details.data:
-            order_detail = OrderDetail(
-                order_id=order.po_num,  # 假设Order的PO编号是创建后立即可用的
-                product_id=detail_form['product_id'],
-                qty=detail_form['qty'],
-                type=detail_form['type']
-            )
-            # db.session.add(order_detail)
+    for pallet_form in form.pallets.data:
+        pallet = Pallet(
+            order_id=order.po_num,
+            # Pallet的字段...
+        )
+        # db.session.add(pallet)
 
-        for pallet_form in form.pallets.data:
-            pallet = Pallet(
-                order_id=order.po_num,
-                # Pallet的字段...
-            )
-            # db.session.add(pallet)
-
-        # db.session.commit()
-        flash('订单创建成功')
-        return redirect(url_for('order.order'))
-    return render_template('order_submit.html', form=form)
+    # db.session.commit()
+    # flash('订单创建成功')
+    return redirect(url_for('order.order'))
+   
     
     
     

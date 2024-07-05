@@ -98,74 +98,151 @@
 
                                     {% for detail_form in form.order_details %}
                                         <!--一个商品-->
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>*商品编号</label>
-                                                    <select class="form-control form-control-sm" name="order_details-0-product_id" required>
-                                                        <option value="1" selected>商品1</option>
-                                                        
-                                                        {% for customer in customers %}
-                                                        <option value="{{ customer.id }}">{{ customer.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*采购件数</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="order_details-0-qty" required/>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*CTNS</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>*单价</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">$</span>
+                                        <div class="form-product">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>商品编号</label>
+                                                        <select class="form-control form-control-sm" name="order_details-0-product_id" required>
+                                                            <option value="1" selected>商品1</option>
+                                                            
+                                                            {% for customer in customers %}
+                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>采购件数</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-qty" required/>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>CTNS</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>单价</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
                                                         </div>
-                                                        <input type="text" class="form-control">
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
                                                     </div>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                            </div>   
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>*Total Amount</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">$</span>
+                                                </div>   
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Total Amount</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
                                                         </div>
-                                                        <input type="text" class="form-control">
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*N.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*G.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>M.T.(CBM）</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <label>删除</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <a class="btn btn-sm btn-danger"><i class="fa fa-trash fa-sm"></i></a>
+                                                    <div class="col-md-3">
+                                                        <label>N.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
                                                     </div>
-                                                </div>
-                                            </div>   
+                                                    <div class="col-md-3">
+                                                        <label>G.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>M.T.(CBM）</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label>删除</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <a class="btn btn-sm btn-danger btn-remove-product"><i class="fa fa-trash fa-sm"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                            </div>
                                         </div>
-                                    {% endfor %}   
+                                        
+                                        <div class="form-product">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>商品编号</label>
+                                                        <select class="form-control form-control-sm" name="order_details-1-product_id" required>
+                                                            <option value="1" selected>商品1</option>
+                                                            
+                                                            {% for customer in customers %}
+                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>采购件数</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-1-qty" required/>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>CTNS</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>单价</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                </div>   
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Total Amount</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>N.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>G.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>M.T.(CBM）</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label>删除</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <a class="btn btn-sm btn-danger btn-remove-product"><i class="fa fa-trash fa-sm"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    {% endfor %} 
+                                    <script>
+                                        $(document).on('click', '.btn-remove-product', function() {
+                                            $(this).closest('.form-product').remove();
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
@@ -173,7 +250,7 @@
                                 <div class="form-group">
                                     <div class="row"> 
                                         <div class="col-md-12">
-                                            <b>配件</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增商品</button>
+                                            <b>配件</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增配件</button>
                                         </div>
                                     </div>
                                 </div>
@@ -182,73 +259,149 @@
 
                                     {% for detail_form in form.order_details %}
                                         <!--一个配件-->
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>*商品编号</label>
-                                                    <select class="form-control form-control-sm" name="part_details-0-product_id" required>
-                                                        <option value="1" selected>商品1</option>
-                                                        {% for customer in customers %}
-                                                        <option value="{{ customer.id }}">{{ customer.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*采购件数</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*CTNS</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>*单价</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">$</span>
-                                                        </div>
-                                                        <input type="text" class="form-control">
+                                        <div class="form-part">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>商品编号</label>
+                                                        <select class="form-control form-control-sm" name="part_details-0-product_id" required>
+                                                            <option value="1" selected>商品1</option>
+                                                            {% for customer in customers %}
+                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
                                                     </div>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                            </div>   
+                                                    <div class="col-md-3">
+                                                        <label>采购件数</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>CTNS</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>单价</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                </div>   
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Total Amount</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>N.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>G.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>M.T.(CBM）</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label>删除</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <a class="btn btn-sm btn-danger btn-remove-part"><i class="fa fa-trash fa-sm"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label>*Total Amount</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">$</span>
+
+                                        <div class="form-part">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>商品编号</label>
+                                                        <select class="form-control form-control-sm" name="part_details-0-product_id" required>
+                                                            <option value="1" selected>商品1</option>
+                                                            {% for customer in customers %}
+                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>采购件数</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>CTNS</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>单价</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
                                                         </div>
-                                                        <input type="text" class="form-control">
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*N.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>*G.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>M.T.(CBM）</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <label>删除</label>
-                                                    <div class="input-group input-group-sm">
-                                                        <a class="btn btn-sm btn-danger"><i class="fa fa-trash fa-sm"></i></a>
+                                                </div>   
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Total Amount</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="text" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>   
+                                                    <div class="col-md-3">
+                                                        <label>N.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>G.W.(KGS)</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>M.T.(CBM）</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label>删除</label>
+                                                        <div class="input-group input-group-sm">
+                                                            <a class="btn btn-sm btn-danger btn-remove-part"><i class="fa fa-trash fa-sm"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                            </div>
                                         </div>
                                     {% endfor %}
+                                    <script>
+                                        $(document).on('click', '.btn-remove-part', function() {
+                                            $(this).closest('.form-part').remove();
+                                        });
+                                    </script>
                                 </div>
                             </div>
 
@@ -256,7 +409,7 @@
                                 <div class="form-group">
                                     <div class="row"> 
                                         <div class="col-md-12">
-                                            <b>托盘</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增商品</button>
+                                            <b>托盘</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增托盘</button>
                                         </div>
                                     </div>
                                 </div>
@@ -266,40 +419,83 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <label>*采购件数</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                    <label>采购件数</label>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-qty" required/>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label>*N.W.(KGS)</label>
+                                                    <label>N.W.(KGS)</label>
                                                     <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
+                                                    <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <label>*G.W.(KGS)</label>
+                                                    <label>G.W.(KGS)</label>
                                                     <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
-                                                    <span class="error invalid-feedback">CNTS = PCS * 件箱系统</span>
+                                                    <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <label>*长</label>    
+                                                    <label>长</label>    
                                                     <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <label>*宽</label>    
+                                                    <label>宽</label>    
                                                     <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <label>*高</label>    
+                                                    <label>高</label>    
                                                     <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>删除</label>
                                                     <div class="input-group input-group-sm">
-                                                        <a class="btn btn-sm btn-danger"><i class="fa fa-trash fa-sm"></i></a>
+                                                        <a class="btn btn-sm btn-danger btn-remove-pallet"><i class="fa fa-trash fa-sm"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>采购件数</label>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-1-qty" required/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>N.W.(KGS)</label>
+                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                    <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label>G.W.(KGS)</label>
+                                                    <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                    <span class="error invalid-feedback">CNTS = PCS  件箱系统</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label>长</label>    
+                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label>宽</label>    
+                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label>高</label>    
+                                                    <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label>删除</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <a class="btn btn-sm btn-danger btn-remove-pallet"><i class="fa fa-trash fa-sm"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     {% endfor %}
+
+                                    <script>
+                                        $(document).on('click', '.btn-remove-pallet', function() {
+                                            $(this).closest('.form-group').remove();
+                                        });
+                                    </script>
 
                                 </div>
                             </div>
