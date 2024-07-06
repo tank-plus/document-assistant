@@ -15,6 +15,7 @@ class OrderDetail(db.Model):
     nw_kgs = db.Column(db.Float, nullable=True)  # 净重
     gw_kgs = db.Column(db.Float, nullable=True)  # 毛重
     mt_cmb = db.Column(db.Float, nullable=True)  # 体积
+    pi_category = db.Column(db.String(80), nullable=True)  # PI类别 FIREPLACE MANTEL/FIREPLACE MANTEL TOPS
 
     def __repr__(self):
         return '<OrderDetail %r>' % self.order_id
@@ -107,6 +108,30 @@ class Order(db.Model):
         order.part_details = part_details
         order.pallets = pallets
         return order
+
+    def to_display_data(self):
+        display_data = {}
+        if self.order_details and len(self.order_details) > 0:
+            for order_detail in self.order_details:
+                category_name = order_detail.pi_category
+                if category_name not in display_data:
+                    display_data[category_name] = []
+                record = [order_detail.product_id, f"{order_detail.qty}PCS/{order_detail.ctns}CTNS",
+                          f"{order_detail.unit_price:.2f}", f"{order_detail.total_price:.2f}"]
+                display_data[category_name].append(record)
+
+        if self.part_details and len(self.part_details) > 0:
+            for part_detail in self.part_details:
+                category_name = part_detail.pi_category
+                if category_name not in display_data:
+                    display_data[category_name] = []
+                record = [part_detail.product_id, f"{part_detail.qty}PCS/{part_detail.ctns}CTNS",
+                          f"{part_detail.unit_price:.2f}", f"{part_detail.total_price:.2f}"]
+                display_data[category_name].append(record)
+
+        # TODO 托盘如何处理?
+        if self.pallets and len(self.pallets) > 0:
+            pass
 
     def __repr__(self):
         return '<Order %r>' % self.po_num

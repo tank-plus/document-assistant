@@ -16,6 +16,12 @@ def order_list():
     return render_template('order.html', items=items)
 
 
+@order_bp.route('/preview/<order_id>')
+@login_required
+def order_preview(order_id):
+    return render_template('order_preview.html', order=Order(po_num=order_id))
+
+
 @order_bp.route('/add')
 @login_required
 def order_add():
@@ -29,6 +35,9 @@ def order_add():
     form.port_of_destination.data = 'MONTREAL, CANADA'
     form.pi_num.data = pi_num  # 当年的第N个订单
     form.order_details.append_entry(OrderDetailForm())  # 默认带一个商品
+    form.order_details.append_entry(OrderDetailForm())  # 默认带一个商品
+    form.order_details.append_entry(OrderDetailForm())  # 默认带一个商品
+    form.part_details.append_entry(OrderDetailForm())  # 默认带一个零件
     form.pallets.append_entry(PalletForm())  # 默认带一个托盘
     return render_template('order_submit.html', form=form)
 

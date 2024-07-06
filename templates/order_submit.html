@@ -32,11 +32,11 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label>订单编号</label>
+                                            <label>PO No.</label>
                                             {{ form.po_num(class_='form-control form-control-sm') }}
                                         </div>
                                         <div class="col-md-3">
-                                            <label>客户编号</label>
+                                            <label>Customer</label>
                                             <select class="form-control form-control-sm" name="customer_id" required>
                                                 <option value="1" selected>客户1</option>
                                                 {% for customer in customers %}
@@ -45,11 +45,11 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <label>PI编号</label>
+                                            <label>PI No.</label>
                                             {{ form.pi_num(class_='form-control form-control-sm') }}
                                         </div>
                                         <div class="col-md-3">
-                                            <label>订单日期</label>
+                                            <label>PO Date</label>
                                             {{ form.po_date(class_='form-control form-control-sm') }}
                                         </div>
                                     </div>
@@ -58,19 +58,19 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label>付款方式</label>
+                                            <label>Payment Method</label>
                                             {{ form.payment_method(class_='form-control form-control-sm') }}
                                         </div>
                                         <div class="col-md-3">
-                                            <label>交货日期</label>
+                                            <label>Time of Shipment</label>
                                             {{ form.delivery_date(class_='form-control form-control-sm') }}
                                         </div>
                                         <div class="col-md-3">
-                                            <label>装运港</label>
+                                            <label>Loading Port</label>
                                             {{ form.port_of_loading(class_='form-control form-control-sm') }}
                                         </div>
                                         <div class="col-md-3">
-                                            <label>目的港</label>
+                                            <label>Destination Port</label>
                                             {{ form.port_of_destination(class_='form-control form-control-sm') }}
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label>付款方式</label>
+                                            <label>LOT</label>
                                             {{ form.lot(class_='form-control form-control-sm') }}
                                         </div>
                                     </div>
@@ -99,10 +99,11 @@
                                     {% for detail_form in form.order_details %}
                                         <!--一个商品-->
                                         <div class="form-product">
+                                            
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-3">
-                                                        <label>商品编号</label>
+                                                        <label>Model No.</label>
                                                         <select class="form-control form-control-sm" name="order_details-0-product_id" required>
                                                             <option value="1" selected>商品1</option>
                                                             
@@ -112,7 +113,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label>采购件数</label>
+                                                        <label>PCS</label>
 
                                                         {{ detail_form.qty(class_='form-control form-control-sm product-qty') }}
                                                     </div>
@@ -122,7 +123,7 @@
                                                         
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label>单价</label>
+                                                        <label>Unit Price</label>
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
@@ -194,8 +195,16 @@
                                         <div class="form-part">
                                             <div class="form-group">
                                                 <div class="row">
+                                                     <div class="col-md-3">
+                                                        <label>PI Description</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-category_name" required value="FIREPLACE MANTEL TOPS"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
                                                     <div class="col-md-3">
-                                                        <label>商品编号</label>
+                                                        <label>Model No.</label>
                                                         <select class="form-control form-control-sm" name="part_details-0-product_id" required>
                                                             <option value="1" selected>商品1</option>
                                                             {% for customer in customers %}
@@ -204,7 +213,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label>采购件数</label>
+                                                        <label>PCS</label>
                                                         <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
                                                     </div>
                                                     <div class="col-md-3">
@@ -213,7 +222,7 @@
                                                         
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <label>单价</label>
+                                                        <label>Unit Price</label>
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
@@ -286,7 +295,7 @@
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-name" required/>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <label>采购件数</label>
+                                                    <label>PCS</label>
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-qty" required/>
                                                 </div>
                                                 <div class="col-md-2">

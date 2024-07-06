@@ -34,15 +34,16 @@ def product_save():
     pcs_cnts_ratio = int(request.form.get('pcs_cnts_ratio'))  # 件箱系数
     pcs_per_cnt = int(request.form.get('pcs_per_cnt'))  # 装箱量
     hs_code = request.form.get('hs_code')  # 报关时的商品编号
+    hs_us_code = request.form.get('hs_us_code')
     is_parts = bool(request.form.get('is_parts'))  # 是否配件
     if not is_parts:
         is_parts = False
     product = Product(id=id, model_category=model_category, unit_price=unit_price, nw_kgs=nw_kgs, gw_kgs=gw_kgs,
                       length=length, width=width, height=height, mt_cmb=mt_cmb, pcs_cnts_ratio=pcs_cnts_ratio,
-                      pcs_per_cnt=pcs_per_cnt, hs_code=hs_code, is_parts=is_parts, remarks=remarks)
+                      pcs_per_cnt=pcs_per_cnt, hs_code=hs_code, hs_us_code=hs_us_code, is_parts=is_parts, remarks=remarks)
     db.session.add(product)
     db.session.commit()
-    return redirect(url_for('product.product'))
+    return redirect(url_for('product.product_list'))
 
 
 @product_bp.route('/delete/<id>', methods=['POST'])
@@ -51,4 +52,4 @@ def product_delete(id):
     if product:
         db.session.delete(product)
         db.session.commit()
-    return redirect(url_for('product.product'))
+    return redirect(url_for('product.product_list'))

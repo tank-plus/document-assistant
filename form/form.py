@@ -6,6 +6,7 @@ from model.order import Order, OrderDetail, Pallet
 
 
 class OrderDetailForm(FlaskForm):
+    category_name = StringField('PI类别名称')
     product_id = StringField('商品编号')
     product_model = StringField('商品型号')
     qty = IntegerField('数量')
@@ -106,7 +107,7 @@ class OrderForm(FlaskForm):
             batch_num=self.batch_num.data,
             remarks=self.remarks.data
         )
-        
+
         order.order_details = []
         for order_detail_form in self.order_details:
             order_detail = OrderDetail(
@@ -122,8 +123,7 @@ class OrderForm(FlaskForm):
                 mt_cmb=order_detail_form.mt_cmb.data
             )
             order.order_details.append(order_detail)
-            
-            
+
         order.part_details = []
         for part_detail_form in self.part_details:
             part_detail = OrderDetail(
@@ -154,8 +154,5 @@ class OrderForm(FlaskForm):
                 total_nw_kgs=pallet_form.total_nw_kgs.data
             )
             order.pallets.append(pallet)
-            
+
         return order
-
-        
-

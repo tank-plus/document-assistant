@@ -15,6 +15,7 @@ class Product(db.Model):
     pcs_per_cnt = db.Column(db.Integer, unique=False, nullable=False)  # 装箱量，即每个集装箱能装多少件产品
     hs_code = db.Column(db.String(80), unique=False, nullable=False)  # 报关时的商品编号
     is_parts = db.Column(db.Boolean, unique=False, nullable=False)  # 是否配件
+    hs_us_code = db.Column(db.String(80), unique=False, nullable=True)  # 国外报关时的商品编号
     remarks = db.Column(db.String(4096), unique=False, nullable=True)
 
     def __repr__(self):
