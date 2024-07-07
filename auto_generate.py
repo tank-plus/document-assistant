@@ -25,13 +25,13 @@ def {entity_name_lower}_add():
 @{entity_name_lower}_bp.route('/save', methods=['POST'])
 @login_required
 def {entity_name_lower}_save():
-    return redirect(url_for('{entity_name_lower}.{entity_name_lower}'))
+    return redirect(url_for('{entity_name_lower}.{entity_name_lower}_list'))
     
     
 @{entity_name_lower}_bp.route('/delete/<id>')
 @login_required
 def {entity_name_lower}_delete(id):
-    return redirect(url_for('{entity_name_lower}.{entity_name_lower}'))
+    return redirect(url_for('{entity_name_lower}.{entity_name_lower}_list'))
 """
 
 # Assuming we can somehow loop through or dynamically load entities
@@ -181,13 +181,16 @@ edit_page= """
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="客户名称" name="customer_id" required/>
+                                            <label>客户名称</label>
+                                            <input class="form-control form-control-sm" type="text" name="customer_id" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="客户别名" name="alias_name" required/>
+                                            <label>客户别名</label>
+                                            <input class="form-control form-control-sm" type="text" name="alias_name" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="名称缩写" name="short_name" required/>
+                                            <label>名称缩写</label>
+                                            <input class="form-control form-control-sm" type="text" name="short_name" required/>
                                         </div>
                                     </div>
                                     
@@ -195,13 +198,16 @@ edit_page= """
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="国家" name="country" required/>
+                                            <label>国家</label>
+                                            <input class="form-control form-control-sm" type="text" name="country" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="国家缩写" name="country_short_name" required/>
+                                            <label>国家缩写</label>
+                                            <input class="form-control form-control-sm" type="text" name="country_short_name" required/>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax" name="tel_fax"/>
+                                            <label>Tel/Fax</label>
+                                            <input class="form-control form-control-sm" type="text" name="tel_fax"/>
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +215,8 @@ edit_page= """
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input class="form-control form-control-sm" type="text" placeholder="总部地址" name="address" required/>
+                                            <label>总部地址</label>
+                                            <input class="form-control form-control-sm" type="text" name="address" required/>
                                         </div>
                                     </div>   
                                 </div>
@@ -217,52 +224,6 @@ edit_page= """
                                     <div class="row">
                                         <div class="col-md-12">
                                             <textarea class="form-control" rows="3" placeholder="备注" name="remarks"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-4"><h5 style="display: inline;">收货地址</h5> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> 新增收货地址</button></div>
-                                
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地名称"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地址"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax"/> 
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地名称"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="form-control form-control-sm" type="text" placeholder="收货地址"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control form-control-sm" type="text" placeholder="Tel/Fax"/>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary btn-sm">确认</button>
-                                            <a href="javascript:window.history.back()" class="btn btn-default btn-sm" style="margin-right: 5px;">取消</a>
                                         </div>
                                     </div>
                                 </div>
