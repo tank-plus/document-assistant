@@ -39,7 +39,7 @@
                                     <th>G.W</th>
                                     <th>M.T</th>
                                     <th>件箱系数</th>
-                                    <th>是否配件</th>
+                                    <th>商品/配件</th>
                                     <th>H.S.Code</th>
                                     <th>HS US</th>
                                     <th>装箱量</th>
@@ -56,13 +56,19 @@
                                     <td>{{ item.gw_kgs }}</td>
                                     <td>{{ item.mt_cmb }}</td>
                                     <td>{{ item.pcs_cnts_ratio }}</td>
-                                    <td>{{ item.is_parts }}</td>
+                                    <td>
+                                        {% if item.is_parts%}
+                                            配件
+                                        {% else %}
+                                            商品
+                                        {% endif %}
+                                    </td>
                                     <td>{{ item.hs_code }}</td>
                                     <td>{{ item.hs_us_code }}</td>
                                     <td>{{ item.pcs_per_cnt }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button>
-                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</button>
+                                        <a href="/product/add?action=view&id={{ item.id }}" type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</a>
+                                        <a href="/product/add?action=edit&id={{ item.id }}" type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</a>
                                         <button type="button" class="btn btn-default btn-sm record-delete" style="font-size: 12px;" data-id="{{ item.id }}">删除</button>
                                         
                                     </td>

@@ -34,28 +34,24 @@
                                     <th>客户名称</th>
                                     <th>客户别名</th>
                                     <th>名称缩写</th>
-                                    <th>总部地址</th>
+                                    <th>地址</th>
                                     <th>国家</th>
                                     <th>国家缩写</th>
-                                    <th>收货地址</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for customer in customers %}
                                 <tr>
-                                    <td>{{ customer.id }}</td>
+                                    <td>{{ customer.customer_id }}</td>
                                     <td>{{ customer.alias_name }}</td>
                                     <td>{{ customer.short_name }}</td>
                                     <td>{{ customer.address }}</td>
                                     <td>{{ customer.country }}</td>
                                     <td>{{ customer.country_short_name }}</td>
                                     <td>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button>
-                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</button>
+                                        <a href="/customer/add?action=view&id={{ customer.id }}" type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</a>
+                                        <a href="/customer/add?action=edit&id={{ customer.id }}" type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</a>
                                         <button type="button" class="btn btn-default btn-sm record-delete" style="font-size: 12px;" data-id="{{ customer.id }}">删除</button>
                                         
                                     </td>

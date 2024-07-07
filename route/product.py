@@ -16,7 +16,13 @@ def product_list():
 @product_bp.route('/add')
 @login_required
 def product_add():
-    return render_template('product_edit.html')
+    id = request.args.get('id')
+    action = request.args.get('action')
+    if id:
+        item = Product.query.get(id)
+        return render_template('product_edit.html', item=item, action=action)
+    else:
+        return render_template('product_edit.html', item={}, action=action)
 
 
 @product_bp.route('/save', methods=['POST'])
@@ -35,14 +41,34 @@ def product_save():
     pcs_per_cnt = int(request.form.get('pcs_per_cnt'))  # 装箱量
     hs_code = request.form.get('hs_code')  # 报关时的商品编号
     hs_us_code = request.form.get('hs_us_code')
-    is_parts = bool(request.form.get('is_parts'))  # 是否配件
-    if not is_parts:
+    if 'true' == request.form.get('is_parts'):
+        is_parts = True
+    else:
         is_parts = False
-    product = Product(id=id, model_category=model_category, unit_price=unit_price, nw_kgs=nw_kgs, gw_kgs=gw_kgs,
-                      length=length, width=width, height=height, mt_cmb=mt_cmb, pcs_cnts_ratio=pcs_cnts_ratio,
-                      pcs_per_cnt=pcs_per_cnt, hs_code=hs_code, hs_us_code=hs_us_code, is_parts=is_parts, remarks=remarks)
-    db.session.add(product)
-    db.session.commit()
+    product = Product.query.get(id)
+    if not product:
+        product = Product(customer_id=customer_id, model_category=model_category, unit_price=unit_price, nw_kgs=nw_kgs, gw_kgs=gw_kgs,
+                          length=length, width=width, height=height, mt_cmb=mt_cmb, pcs_cnts_ratio=pcs_cnts_ratio,
+                          pcs_per_cnt=pcs_per_cnt, hs_code=hs_code, hs_us_code=hs_us_code, is_parts=is_parts,
+                          remarks=remarks)
+        db.session.add(product)
+        db.session.commit()
+    else:
+        product.model_category = model_category
+        product.unit_price = unit_price
+        product.nw_kgs = nw_kgs
+        product.gw_kgs = gw_kgs
+        product.length = length
+        product.width = width
+        product.height = height
+        product.mt_cmb = mt_cmb
+        product.pcs_cnts_ratio = pcs_cnts_ratio
+        product.pcs_per_cnt = pcs_per_cnt
+        product.hs_code = hs_code
+        product.hs_us_code = hs_us_code
+        product.is_parts = is_parts
+        product.remarks = remarks
+        db.session.commit()
     return redirect(url_for('product.product_list'))
 
 

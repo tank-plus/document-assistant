@@ -16,11 +16,18 @@ def customer():
 @customer_bp.route('/add')
 @login_required
 def customer_add():
-    return render_template('customer_edit.html')
+    id = request.args.get('id')
+    action = request.args.get('action')
+    if id:
+        item = Customer.query.get(id)
+        return render_template('customer_edit.html', item=item, action=action)
+    else:
+        return render_template('customer_edit.html', item={}, action=action)
 
 
 @customer_bp.route('/save', methods=['POST'])
 def customer_save():
+    id = request.form.get('id')
     customer_id = request.form.get('customer_id')
     alias_name = request.form.get('alias_name')
     short_name = request.form.get('short_name')
@@ -29,10 +36,21 @@ def customer_save():
     address = request.form.get('address')
     tel_fax = request.form.get('tel_fax')
     remarks = request.form.get('remarks')
-    customer = Customer(id=customer_id, alias_name=alias_name, short_name=short_name, country=country,
-                        country_short_name=country_short_name, address=address, tel_fax=tel_fax, remarks=remarks)
-    db.session.add(customer)
-    db.session.commit()
+
+    customer_item = Customer.query.get(id)
+    if not customer_item:
+        customer_item = Customer(customer_id=customer_id, alias_name=alias_name, short_name=short_name, country=country,
+                                 country_short_name=country_short_name, address=address, tel_fax=tel_fax,
+                                 remarks=remarks)
+        db.session.add(customer_item)
+        db.session.commit()
+    else:
+        customer_item.alias_name = alias_name
+        customer_item.short_name = short_name
+        customer_item.address = address
+        customer_item.tel_fax = tel_fax
+        customer_item.remarks = remarks
+        db.session.commit()
     return redirect(url_for('customer.customer'))
 
 

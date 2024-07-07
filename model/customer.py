@@ -2,7 +2,8 @@ from model.db import db
 
 
 class Customer(db.Model):
-    id = db.Column(db.String(80), primary_key=True)  # 客户编号
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 客户编号
+    customer_id = db.Column(db.String(80), unique=True, nullable=False)  # 客户编号
     alias_name = db.Column(db.String(80), unique=False, nullable=False)  # 客户别名
     short_name = db.Column(db.String(80), unique=False, nullable=False)  # 客户简称
     address = db.Column(db.String(4096), unique=False, nullable=False)  # 客户地址
