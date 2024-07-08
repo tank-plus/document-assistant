@@ -6,7 +6,7 @@ from model.order import Order, OrderDetail, Pallet
 
 
 class OrderDetailForm(FlaskForm):
-    category_name = StringField('PI类别名称')
+    pi_category = StringField('PI类别名称')
     product_id = StringField('商品编号')
     product_model = StringField('商品型号')
     qty = IntegerField('数量')
@@ -20,6 +20,7 @@ class OrderDetailForm(FlaskForm):
 
 
 class PalletForm(FlaskForm):
+    pallet_name = StringField('名称')
     width = FloatField('宽')
     height = FloatField('高')
     length = FloatField('长')
@@ -38,7 +39,7 @@ class OrderForm(FlaskForm):
     pi_num = StringField('PI编号')
     po_date = DateField('订单日期', format='%Y-%m-%d')
     payment_method = StringField('付款方式')
-    delivery_date = DateField('交货日期', format='%Y-%m-%d')
+    delivery_date = StringField('交货日期')
     port_of_loading = StringField('装运港')
     port_of_destination = StringField('目的港')
     ctn_size_qty = FloatField('集装箱尺寸')
@@ -111,6 +112,7 @@ class OrderForm(FlaskForm):
         order.order_details = []
         for order_detail_form in self.order_details:
             order_detail = OrderDetail(
+                pi_category = order_detail_form.pi_category.data,
                 order_id=order.po_num,
                 product_id=order_detail_form.product_id.data,
                 product_model=order_detail_form.product_model.data,
@@ -120,38 +122,44 @@ class OrderForm(FlaskForm):
                 ctns=order_detail_form.ctns.data,
                 total_price=order_detail_form.total_price.data,
                 nw_kgs=order_detail_form.nw_kgs.data,
-                mt_cmb=order_detail_form.mt_cmb.data
+                mt_cmb=order_detail_form.mt_cmb.data,
+                gw_kgs=order_detail_form.gw_kgs.data
             )
             order.order_details.append(order_detail)
 
         order.part_details = []
         for part_detail_form in self.part_details:
             part_detail = OrderDetail(
+                pi_category = part_detail_form.pi_category.data,
                 order_id=order.po_num,
                 product_id=part_detail_form.product_id.data,
                 product_model=part_detail_form.product_model.data,
-                qty=part_detail_form.qty,
+                qty=part_detail_form.qty.data,
                 type='配件',
                 unit_price=part_detail_form.unit_price.data,
                 ctns=part_detail_form.ctns.data,
                 total_price=part_detail_form.total_price.data,
                 nw_kgs=part_detail_form.nw_kgs.data,
-                mt_cmb=part_detail_form.mt_cmb.data
+                mt_cmb=part_detail_form.mt_cmb.data,
+                gw_kgs=part_detail_form.gw_kgs.data
             )
             order.part_details.append(part_detail)
 
         order.pallets = []
         for pallet_form in self.pallets:
             pallet = Pallet(
+                name = pallet_form.pallet_name.data,
                 order_id=order.po_num,
                 width=pallet_form.width.data,
                 height=pallet_form.height.data,
                 length=pallet_form.length.data,
                 nw_kgs=pallet_form.nw_kgs.data,
+                gw_kgs = pallet_form.gw_kgs.data,
                 mt_cmb=pallet_form.mt_cmb.data,
                 qty=pallet_form.qty.data,
-                total_mt_cmb=pallet_form.total_mt_cmb.data,
-                total_nw_kgs=pallet_form.total_nw_kgs.data
+                total_mt_cmb=pallet_form.qty.data * pallet_form.mt_cmb.data,
+                total_nw_kgs=pallet_form.qty.data* pallet_form.nw_kgs.data,
+                total_gw_kgs=pallet_form.qty.data* pallet_form.gw_kgs.data
             )
             order.pallets.append(pallet)
 

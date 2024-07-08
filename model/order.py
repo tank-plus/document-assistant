@@ -43,7 +43,7 @@ class Order(db.Model):
     pi_num = db.Column(db.String(36), nullable=True)  # PI编号
     po_date = db.Column(db.Date, nullable=True)  # 订单日期
     payment_method = db.Column(db.String(80), nullable=True)  # 付款方式
-    delivery_date = db.Column(db.Date, nullable=True)  # 交货日期
+    delivery_date = db.Column(db.String(500), nullable=True)  # 交货日期
     port_of_loading = db.Column(db.String(80), nullable=True)  # 装运港
     port_of_destination = db.Column(db.String(80), nullable=True)  # 目的港
     ctn_size_qty = db.Column(db.Float, nullable=True)  # 集装箱尺寸

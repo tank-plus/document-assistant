@@ -38,9 +38,8 @@
                                         <div class="col-md-3">
                                             <label>Customer</label>
                                             <select class="form-control form-control-sm" name="customer_id" required>
-                                                <option value="1" selected>ReaFlame</option>
                                                 {% for customer in customers %}
-                                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                    <option value="{{ customer.id }}">{{ customer.alias_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -99,27 +98,31 @@
                                     {% for detail_form in form.order_details %}
                                         <!--一个商品-->
                                         <div class="form-product">
-                                            
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
+                                                        <label>PI Description</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-pi_category" required value="FIREPLACE MANTEL"/>
+                                                    </div>
+                                                    <div class="col-md-2">
                                                         <label>Model No.</label>
                                                         <select class="form-control form-control-sm" name="order_details-0-product_id" required>
-                                                            <option value="1" selected>商品1</option>
-                                                            
-                                                            {% for customer in customers %}
-                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% for product in products %}
+                                                            <option value="{{ product.id }}">{{ product.id }}</option>
                                                             {% endfor %}
                                                         </select>
+                                                    </div>  
+                                                    <div class="col-md-2">
+                                                        <label>产品型号</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-product_model" required/>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>PCS</label>
-
-                                                        {{ detail_form.qty(class_='form-control form-control-sm product-qty') }}
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-qty" required/>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-ctns" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -128,36 +131,39 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" class="form-control" name="order_details-0-unit_price">
                                                         </div>
                                                         
-                                                    </div>
-                                                </div>   
+                                                    </div>    
+                                                </div>
+                                                
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>Total Amount</label>
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" class="form-control" name="order_details-0-total_price">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    
+                                                    <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-nw_kgs" required/>
                                                         
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-gw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-mt_cmb" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
@@ -193,32 +199,32 @@
                                     {% for part_form in form.part_details %}
                                         <!--一个配件-->
                                         <div class="form-part">
+                                            
                                             <div class="form-group">
                                                 <div class="row">
-                                                     <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>PI Description</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-category_name" required value="FIREPLACE MANTEL TOPS"/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-pi_category" required value="FIREPLACE MANTEL TOPS"/>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>Model No.</label>
                                                         <select class="form-control form-control-sm" name="part_details-0-product_id" required>
-                                                            <option value="1" selected>商品1</option>
-                                                            {% for customer in customers %}
-                                                            <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                                            {% for part in parts %}
+                                                            <option value="{{ part.id }}">{{ part.id }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
+                                                        <label>产品型号</label>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-product_model" required/>
+                                                    </div>
+                                                    <div class="col-md-2">
                                                         <label>PCS</label>
                                                         <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-ctns" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -227,36 +233,37 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" class="form-control" name="part_details-0-unit_price">
                                                         </div>
                                                         
                                                     </div>
+                                                    
                                                 </div>   
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>Total Amount</label>
                                                         <div class="input-group input-group-sm">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" class="form-control" name="part_details-0-total_price">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-nw_kgs" required/>
                                                         
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="pcs_num" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-gw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="unit_price" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-mt_cmb" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
@@ -290,20 +297,20 @@
                                     {% for pallet_form in form.pallets %}
                                         <div class="form-group">
                                             <div class="row">
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <label>托盘名称</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-name" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-pallet_name" required/>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <label>PCS</label>
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-qty" required/>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <label>N.W.(KGS)</label>
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-nw_kgs" required/>
                                                     
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <label>G.W.(KGS)</label>
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-gw_kgs" required/>
                                                     
@@ -319,6 +326,10 @@
                                                 <div class="col-md-1">
                                                     <label>高</label>    
                                                     <input class="form-control form-control-sm" type="text"  name="pallets-0-height" required/>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label>M.T.(CBM）</label>    
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-mt_cmb" required/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>删除</label>

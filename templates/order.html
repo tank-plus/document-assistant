@@ -66,7 +66,7 @@
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">确认订单</button>
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button>
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</button>
-                                        <button type="button" class="btn btn-default btn-sm record-delete" style="font-size: 12px;" data-id="{{ item.id }}">删除</button>
+                                        <button type="button" class="btn btn-default btn-sm record-delete" style="font-size: 12px;" data-id="{{ item.po_num }}">删除</button>
                                         
                                     </td>
                                 </tr>
@@ -101,7 +101,7 @@
         </div>
         <div class="modal-body">
             <form id="delete-form" method="POST">
-                <p>确认删除客户?</p>
+                <p>确认删除订单?</p>
             </form>
         </div>
         <div class="modal-footer justify-content-between">
@@ -110,7 +110,7 @@
             <script>
                 $("#btn-confirm-delete").click(function() {
                     var id = $(this).data("id");
-                    $("#delete-form").attr("action", "/{entity_name_lower}/delete/" + id);
+                    $("#delete-form").attr("action", "/order/delete/" + id);
                     $("#delete-form").submit();
                     $("#modal-default").modal("hide");
                 });
