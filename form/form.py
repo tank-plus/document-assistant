@@ -34,7 +34,7 @@ class PalletForm(FlaskForm):
 
 class OrderForm(FlaskForm):
     po_num = StringField('订单编号')
-    customer_id = StringField('客户编号')
+    customer_id = IntegerField('客户编号')
     pi_num = StringField('PI编号')
     po_date = DateField('订单日期', format='%Y-%m-%d')
     payment_method = StringField('付款方式')

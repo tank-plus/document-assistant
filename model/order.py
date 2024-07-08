@@ -39,7 +39,7 @@ class Pallet(db.Model):  # 托盘没有价格，有体积、净重和重
 
 class Order(db.Model):
     po_num = db.Column(db.String(36), primary_key=True)  # 订单编号
-    customer_id = db.Column(db.String(80), db.ForeignKey('customer.id'), nullable=True)  # 客户编号
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=True)  # 客户编号
     pi_num = db.Column(db.String(36), nullable=True)  # PI编号
     po_date = db.Column(db.Date, nullable=True)  # 订单日期
     payment_method = db.Column(db.String(80), nullable=True)  # 付款方式
