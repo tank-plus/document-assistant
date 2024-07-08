@@ -27,8 +27,34 @@ class OrderPIProcessor:
         self.order = order
         if not os.path.exists("./static/pi_confirm"):
             os.makedirs("./static/pi_confirm")
-        self.file_name = f"./static/pi_confirm/{self.order.get_file_name()}"
+        self.file_name = f"./static/pi_confirm/{self.order.po_num}.xlsx"
         self.template = template
+        
+    @property
+    def file_name(self):
+        return self.file_name
+    
+    def transfer_order_data(self):
+        order_real_data = {}
+        for order_detail in self.order.order_details:
+            pi_category = order_detail.pi_category
+            if pi_category not in order_real_data:
+                order_real_data[pi_category] = []
+            
+            order_real_data[pi_category].append([order_detail.product_id, 
+                                                 f"{order_detail.qty}PCS/{order_detail.ctns}CTNS"", 
+                                                 order_detail.unit_price, 
+                                                 order_detail.total_price])
+        for part_detail in self.order.part_details:
+            pi_category = part_detail.pi_category
+            if pi_category not in order_real_data:
+                order_real_data[pi_category] = []
+            
+            order_real_data[pi_category].append([part_detail.product_id, 
+                                                 f"{part_detail.qty}PCS/{part_detail.ctns}CTNS"", 
+                                                 part_detail.unit_price, 
+                                                 part_detail.total_price])
+        return order_real_data
 
     def process(self):
         # 加载Excel文件
@@ -40,22 +66,7 @@ class OrderPIProcessor:
             if sheet_name == 'PI':
                 data_rows = 0
                 total_amount = 0.0
-                # TODO 从order中解析出真实数据
-                order_real_data = {
-                    "FIREPLACE MANTEL": [
-                        ["13058-X-VBM", "120PCS/120CTNS", 111.20, 13344.00],
-                        ["8700-X-CHBW", "109PCS/218CTNS", 154.90, 16884.10],
-                        ["8701-X-CHBW", "110PCS/110CTNS", 154.90, 16884.10],
-                        ["13058-X-VBM", "120PCS/120CTNS", 111.20, 13344.00],
-                        ["8700-X-CHBW", "109PCS/218CTNS", 154.90, 16884.10],
-                        ["8701-X-CHBW", "110PCS/110CTNS", 154.90, 16884.10],
-                        ["13058-X-VBM", "120PCS/120CTNS", 111.20, 13344.00],
-                        ["8700-X-CHBW", "109PCS/218CTNS", 154.90, 16884.10]
-                    ],
-                    "FIREPLACE MANTEL TOPS": [
-                        ["8700-X-CHBW TOPS", "5PCS/5CTNS", 50.00, 250.00],
-                    ]
-                }
+                order_real_data = self.transfer_order_data()
 
                 sheet = workbook[sheet_name]
                 for row in sheet.iter_rows():
@@ -133,7 +144,7 @@ class OrderPIProcessor:
                 cell_new = sheet[f"A{description_row + 2}"]
                 cell_new.alignment = Alignment(horizontal='center', vertical='center')
 
-                rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), self.order.customer.id))
+                rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), self.order.customer.customer_id))
                 rich_text_a8.font = Font(size=12, bold=True, name="Times New Roman")
                 sheet["A8"] = rich_text_a8
 
@@ -152,9 +163,30 @@ class OrderPIProcessor:
                 img.height = 100  # 设置高度为100像素
 
                 sheet.add_image(img, f'B{picture_row + len(order_real_data) + 1}')
+                
+                
+                # replace_data
+                data = {}
+                data["{{pi_num}}"] = self.order.pi_num
+                data["{{po_num}}"] = self.order.po_num
+                data["{{po_date}}"] = self.order.po_date.strftime("%Y-%m-%d")
+                data["{{customer_name}}"] = "To: " + self.order.customer.customer_name
+                data["{{customer_address}}"] = "Add: " + self.order.customer.address
+                data["{{customer_tel_fax}}"] = "Tel/Fax: " + self.order.customer.tel_fax
+                data["{{payment_method}}"] = self.order.payment_method
+                data["{{delivery_date}}"] = self.order.delivery_date
+                data["{{port_of_loading}}"] = self.order.port_of_loading
+                data["{{port_of_destination}}"] = self.order.port_of_destination
+                # 遍历sheet中的所有行和单元格
+                for row in sheet.iter_rows(min_row=1, max_col=sheet.max_column, max_row=sheet.max_row, values_only=False):
+                    for cell in row:
+                        if cell.value:
+                            for placeholder, actual_value in data.items():
+                                if placeholder in str(cell.value):
+                                    cell.value = str(cell.value).replace(placeholder, actual_value)
 
         # 保存Excel文件
-        workbook.save(self.output_path)
+        workbook.save(self.file_name)
 
 
 if __name__ == "__main__":

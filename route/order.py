@@ -21,7 +21,14 @@ def order_list():
 @order_bp.route('/preview/<order_id>')
 @login_required
 def order_preview(order_id):
-    return render_template('order_preview.html', order=Order(po_num=order_id))
+    order = Order.query.get(order_id)
+    order_details = OrderDetail.query.filter(OrderDetail.order_id == order_id, OrderDetail.type == '商品').all()
+    part_details = OrderDetail.query.filter(OrderDetail.order_id == order_id, OrderDetail.type == '配件').all()
+    pallets = Pallet.query.filter(Pallet.order_id == order_id).all()
+    order.order_details = order_details
+    order.part_details = part_details
+    order.pallets = pallets
+    return render_template('order_preview.html', order=order)
 
 
 @order_bp.route('/add')
