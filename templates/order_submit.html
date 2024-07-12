@@ -102,11 +102,11 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <label>PI Description</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-pi_category" required value="FIREPLACE MANTEL"/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Model No.</label>
-                                                        <select class="form-control form-control-sm" name="order_details-0-product_id" required>
+                                                        <select class="form-control form-control-sm" name="order_details-{{ loop.index0 }}-product_id" required>
                                                             {% for product in products %}
                                                             <option value="{{ product.id }}">{{ product.id }}</option>
                                                             {% endfor %}
@@ -114,15 +114,15 @@
                                                     </div>  
                                                     <div class="col-md-2">
                                                         <label>产品型号</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-product_model" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-product_model" required/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>PCS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-qty" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-qty" required/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-ctns" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-ctns" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -131,7 +131,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="order_details-0-unit_price">
+                                                            <input type="text" class="form-control" name="order_details-{{ loop.index0 }}-unit_price">
                                                         </div>
                                                         
                                                     </div>    
@@ -147,23 +147,23 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="order_details-0-total_price">
+                                                            <input type="text" class="form-control" name="order_details-{{ loop.index0 }}-total_price">
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-nw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-nw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-gw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-gw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-0-mt_cmb" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-mt_cmb" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
@@ -204,11 +204,11 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <label>PI Description</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-pi_category" required value="FIREPLACE MANTEL TOPS"/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL TOPS"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Model No.</label>
-                                                        <select class="form-control form-control-sm" name="part_details-0-product_id" required>
+                                                        <select class="form-control form-control-sm" name="part_details-{{ loop.index0 }}-product_id" required>
                                                             {% for part in parts %}
                                                             <option value="{{ part.id }}">{{ part.id }}</option>
                                                             {% endfor %}
@@ -216,15 +216,15 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>产品型号</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-product_model" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-product_model" required/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>PCS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-qty" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-qty" required/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-ctns" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-ctns" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -233,7 +233,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-0-unit_price">
+                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-unit_price">
                                                         </div>
                                                         
                                                     </div>
@@ -248,22 +248,22 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-0-total_price">
+                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-total_price">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-nw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-nw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-gw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-gw_kgs" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-0-mt_cmb" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-mt_cmb" required/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">

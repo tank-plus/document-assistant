@@ -107,6 +107,9 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+@app.template_filter('format_currency')
+def format_currency(value):
+    return f"{value:.2f}"
 
 # 以上是通用路由定义
 

@@ -56,7 +56,7 @@
                                     <td>{{ item.customer.alias_name }}</td>
                                     <td>
                                         {% for product in item.order_details %}
-                                        {{ product.type }} {{ product.product_id }} 数量{{ product.qty }} 总额${{ product.total_price }}<br>
+                                        {{ product.type }} {{ product.product_id }} 数量{{ product.qty }} 总额${{ product.total_price | format_currency }}<br>
                                         {% endfor %}
                                     </td>
                                     <td>{{ item.payment_method }}</td>
@@ -68,7 +68,7 @@
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">复制</button>
                                         <a class="btn btn-default btn-sm" style="font-size: 12px;" href="/order/preview/{{ item.po_num }}">PI预览</a>
                                         <!-- <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">确认订单</button> -->
-                                        <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button>
+                                        <!-- <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">查看</button> -->
                                         <button type="button" class="btn btn-default btn-sm" style="font-size: 12px;">编辑</button>
                                         <button type="button" class="btn btn-danger btn-sm record-delete" style="font-size: 12px;" data-id="{{ item.po_num }}">删除</button>
                                         

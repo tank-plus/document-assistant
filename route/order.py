@@ -12,6 +12,7 @@ from model.product import Product
 order_bp = Blueprint('order', __name__)
 
 
+
 @order_bp.route('/')
 @login_required
 def order_list():
