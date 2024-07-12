@@ -42,7 +42,7 @@ class OrderPIProcessor:
                 order_real_data[pi_category] = []
             
             order_real_data[pi_category].append([order_detail.product_id, 
-                                                 f"{order_detail.qty}PCS/{order_detail.ctns}CTNS"", 
+                                                 f"{order_detail.qty}PCS/{order_detail.ctns}CTNS", 
                                                  order_detail.unit_price, 
                                                  order_detail.total_price])
         for part_detail in self.order.part_details:
@@ -51,7 +51,7 @@ class OrderPIProcessor:
                 order_real_data[pi_category] = []
             
             order_real_data[pi_category].append([part_detail.product_id, 
-                                                 f"{part_detail.qty}PCS/{part_detail.ctns}CTNS"", 
+                                                 f"{part_detail.qty}PCS/{part_detail.ctns}CTNS", 
                                                  part_detail.unit_price, 
                                                  part_detail.total_price])
         return order_real_data
