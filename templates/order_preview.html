@@ -91,32 +91,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td rowspan="2" style="vertical-align:middle;">FIREPLACE MANTEL</td>
-                                        <td>13058-X-VBM</td>
-                                        <td>120PCS/120CTNS</td>
-                                        <td>$111.20</td>
-                                        <td>$13,344.00 </td>
-                                    </tr>
-                                    <tr>
+                                    {% for category,products in order.detail.items() %}
+                                        {% for product in products %}
+                                            {% if loop.index0 == 0 %}
+                                                <tr>
+                                                    <td rowspan="{{products | length}}" style="vertical-align:middle;">{{category}}</td>
+                                                    <td>{{product.product_id}}</td>
+                                                    <td>{{product.qty}}PCS/{{product.ctns}}CTNS</td>
+                                                    <td>${{product.unit_price | format_currency}}</td>
+                                                    <td>${{product.total_price | format_currency}} </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
 
-                                        <td>8700-X-CHBW</td>
-                                        <td>109PCS/218CTNS</td>
-                                        <td>$154.90</td>
-                                        <td>$16,884.10 </td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="1" style="vertical-align:middle;">FIREPLACE MANTEL TOPS</td>
-                                        <td>8700-X-CHBW TOPS</td>
-                                        <td>5PCS/5CTNS</td>
-                                        <td>$50.00</td>
-                                        <td>$250.00 </td>
-                                    </tr>
+                                                    <td>{{product.product_id}}</td>
+                                                    <td>{{product.qty}}PCS/{{product.ctns}}CTNS</td>
+                                                    <td>${{product.unit_price | format_currency}}</td>
+                                                    <td>${{product.total_price | format_currency}}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
                                     <tr>
                                         <td colspan="2" style="text-align:right;font-weight:bold;"><strong>TOTAL:</strong></td>
                                         <td></td>
                                         <td></td>
-                                        <td style="font-weight:bold;">$30,478.10 </td>
+                                        <td style="font-weight:bold;">${{total | format_currency}} </td>
                                     </tr>
                                     <tr>
                                         <td style="vertical-align:middle;">
@@ -124,7 +124,7 @@
                                             (In Capital Letters)
                                         </td>
                                         <td colspan="4" style="vertical-align:middle;">
-                                            SAY US DOLLARS THIRTY THOUSAND FOUR HUNDRED AND SEVENTY EIGHT CENTS TEN ONLY.
+                                            {{total_in_words}}.
                                         </td>
                                     </tr>
                                 </tbody>

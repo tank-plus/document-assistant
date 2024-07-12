@@ -47,7 +47,7 @@ def product_save():
         is_parts = False
     product = Product.query.get(id)
     if not product:
-        product = Product(customer_id=customer_id, model_category=model_category, unit_price=unit_price, nw_kgs=nw_kgs, gw_kgs=gw_kgs,
+        product = Product(id=id, model_category=model_category, unit_price=unit_price, nw_kgs=nw_kgs, gw_kgs=gw_kgs,
                           length=length, width=width, height=height, mt_cmb=mt_cmb, pcs_cnts_ratio=pcs_cnts_ratio,
                           pcs_per_cnt=pcs_per_cnt, hs_code=hs_code, hs_us_code=hs_us_code, is_parts=is_parts,
                           remarks=remarks)

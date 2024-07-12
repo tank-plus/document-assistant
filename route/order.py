@@ -8,6 +8,7 @@ from model.order import Order
 from route.common import login_required
 from model.customer import Customer
 from model.product import Product
+from core.util import number_to_words
 
 order_bp = Blueprint('order', __name__)
 
@@ -24,13 +25,22 @@ def order_list():
 @login_required
 def order_preview(order_id):
     order = Order.query.get(order_id)
-    order_details = OrderDetail.query.filter(OrderDetail.order_id == order_id, OrderDetail.type == '商品').all()
-    part_details = OrderDetail.query.filter(OrderDetail.order_id == order_id, OrderDetail.type == '配件').all()
-    pallets = Pallet.query.filter(Pallet.order_id == order_id).all()
-    order.order_details = order_details
-    order.part_details = part_details
-    order.pallets = pallets
-    return render_template('order_preview.html', order=order)
+    order_details = OrderDetail.query.filter(OrderDetail.order_id == order_id).all()
+    # part_details = OrderDetail.query.filter(OrderDetail.order_id == order_id, OrderDetail.type == '配件').all()
+    # pallets = Pallet.query.filter(Pallet.order_id == order_id).all()
+    # order.order_details = order_details
+    # order.part_details = part_details 
+    # order.pallets = pallets
+    detail = {}
+    total = 0.0
+    for od in order_details:
+        total = total + od.total_price
+        if od.pi_category not in detail:
+            detail[od.pi_category] = []
+        detail[od.pi_category].append(od)
+    order.detail = detail
+    total_in_words = number_to_words(total)
+    return render_template('order_preview.html', order=order, total=total, total_in_words=total_in_words)
 
 
 @order_bp.route('/add')
