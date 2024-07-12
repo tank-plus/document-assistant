@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, render_template, redirect, url_for
+from sqlalchemy.orm import joinedload
 
 from form.form import *
 from model.order import Order
@@ -14,7 +15,7 @@ order_bp = Blueprint('order', __name__)
 @order_bp.route('/')
 @login_required
 def order_list():
-    items = Order.query.all()
+    items = Order.query.options(joinedload(Order.order_details),joinedload(Order.pallets)).all()
     return render_template('order.html', items=items)
 
 

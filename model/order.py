@@ -56,6 +56,9 @@ class Order(db.Model):
     status = db.Column(db.String(80), nullable=True)  # 订单状态
     created_at = db.Column(db.DateTime, default=db.func.now())  # 创建时间
     remarks = db.Column(db.String(4096), nullable=True)  # 备注
+    customer = db.relationship('Customer', backref='orders', lazy=True)  # 客户
+    order_details = db.relationship('OrderDetail', backref='order', lazy=True)  # 订单详情
+    pallets = db.relationship('Pallet', backref='order', lazy=True)  # 托盘
 
     def __init__(self, **kwargs):
         super(Order, self).__init__(**kwargs)

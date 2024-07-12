@@ -53,8 +53,12 @@
                                     <td>{{ item.po_num }}</td>
                                     <td>{{ item.po_date  }}</td>
                                     <td>{{ item.lot }}</td>
-                                    <td>{{ item.customer_id }}</td>
-                                    <td>TODO 采购商品</td>
+                                    <td>{{ item.customer.alias_name }}</td>
+                                    <td>
+                                        {% for product in item.order_details %}
+                                        {{ product.type }} {{ product.product_id }} 数量{{ product.qty }} 总额${{ product.total_price }}<br>
+                                        {% endfor %}
+                                    </td>
                                     <td>{{ item.payment_method }}</td>
                                     <td>{{ item.delivery_date }}</td>
                                     <td>{{ item.port_of_loading }}</td>
