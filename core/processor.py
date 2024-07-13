@@ -17,8 +17,11 @@ thin_border = Border(
 )
 
 # 定义字体
+font24_bold = Font(size=24, bold=True, name="Times New Roman")
 font12_bold = Font(size=12, bold=True, name="Times New Roman")
 font10_common = Font(size=10, name="Times New Roman")
+font11_common = Font(size=11, name="Times New Roman")
+font12_underline = Font(size=12, underline='single', name="Times New Roman")
 font10_bold_underline = Font(size=10, bold=True, underline='single', name="Times New Roman")
 
 
@@ -36,7 +39,13 @@ class OrderPIProcessor:
     
     def transfer_order_data(self):
         order_real_data = {}
+        total_amount = 0.0
+        total_pcs = 0
+        total_ctns = 0
         for order_detail in self.order.order_details:
+            total_amount += order_detail.total_price
+            total_pcs += order_detail.qty
+            total_ctns += order_detail.ctns
             pi_category = order_detail.pi_category
             if pi_category not in order_real_data:
                 order_real_data[pi_category] = []
@@ -47,6 +56,9 @@ class OrderPIProcessor:
                                                  order_detail.unit_price, 
                                                  order_detail.total_price])
         for part_detail in self.order.part_details:
+            total_amount += part_detail.total_price
+            total_pcs += part_detail.qty
+            total_ctns += part_detail.ctns
             pi_category = part_detail.pi_category
             if pi_category not in order_real_data:
                 order_real_data[pi_category] = []
@@ -56,7 +68,7 @@ class OrderPIProcessor:
                                                  f"{part_detail.qty}PCS/{part_detail.ctns}CTNS", 
                                                  part_detail.unit_price, 
                                                  part_detail.total_price])
-        return order_real_data
+        return order_real_data, total_amount, total_pcs, total_ctns
 
     def process(self):
         # 加载Excel文件
@@ -67,8 +79,7 @@ class OrderPIProcessor:
             print(f"正在处理Sheet: {sheet_name}")
             if sheet_name == 'PI':
                 data_rows = 0
-                total_amount = 0.0
-                order_real_data = self.transfer_order_data()
+                order_real_data, total_amount, total_pcs, total_ctns = self.transfer_order_data()
 
                 sheet = workbook[sheet_name]
                 for row in sheet.iter_rows():
@@ -84,8 +95,6 @@ class OrderPIProcessor:
                 if description_row:
                     for key, value in order_real_data.items():
                         data_rows += len(value)
-                        for record in value:
-                            total_amount += float(record[4])
 
                     print(f"data_rows:{data_rows}")
 
@@ -115,16 +124,16 @@ class OrderPIProcessor:
                             cell.value = value
                             cell.border = thin_border
                             cell.number_format = '$#,##0.00'
-                            cell.font = font10_common
+                            cell.font = font11_common
+                            cell.alignment = Alignment(vertical='center')
+                            
                     catogery_row_pair.append((start_row, start_row + len(records) - 1))
                     start_row += len(records)
                     
                 
 
                 total_row = description_row + 2 + len(order_real_data) + 1
-                
-                # 最后一个单元格的金额样式调整
-                sheet[f"E{total_row-1}"].alignment = Alignment(horizontal='left', vertical='center')
+            
 
                 print(f"total_row:{total_row}")
 
@@ -133,6 +142,14 @@ class OrderPIProcessor:
                 total_cell1.border = thin_border
                 total_cell1.font = font12_bold
                 total_cell1.alignment = Alignment(horizontal='right', vertical='center')
+                
+                
+                total_cell3 = sheet.cell(row=total_row, column=3)
+                # TODO 汇总PCS/CTNS
+                total_cell3.value = f'{total_pcs}PCS/{total_ctns}CTNS'
+                total_cell3.border = thin_border
+                total_cell3.font = font10_bold_underline
+                total_cell3.alignment = Alignment(horizontal='left', vertical='center')
 
                 total_cell5 = sheet.cell(row=total_row, column=5)
                 total_cell5.value = total_amount
@@ -144,7 +161,7 @@ class OrderPIProcessor:
 
                 sheet.cell(row=total_row + 1, column=2, value=number_to_words(total_amount))
                 sheet.merge_cells(f"B{total_row + 1}:E{total_row + 1}")
-                # cell = sheet[f'B{total_row + 2}']
+                cell = sheet[f'B{total_row + 2}']
                 cell.alignment = Alignment(horizontal='center', vertical='center')
                 cell.border = thin_border
 
@@ -154,23 +171,23 @@ class OrderPIProcessor:
                     cell_new = sheet[f"A{start}"]
                     cell_new.alignment = Alignment(horizontal='center', vertical='center')
 
-                rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), self.order.customer.customer_id))
-                rich_text_a8.font = Font(size=12, bold=True, name="Times New Roman")
+                rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman', u='single', sz=12), self.order.customer.customer_id))
+                rich_text_a8.font = Font(size=14, bold=True, name="Times New Roman")
                 sheet["A8"] = rich_text_a8
 
-                rich_text_a9 = CellRichText('Add:', TextBlock(InlineFont(rFont='Times New Roman', u='single'),self.order.customer.address))
-                rich_text_a9.font = Font(size=12, bold=True, name="Times New Roman")
+                rich_text_a9 = CellRichText('Add:', TextBlock(InlineFont(rFont='Times New Roman', u='single', sz=12),self.order.customer.address))
+                rich_text_a9.font = Font(size=14, bold=True, name="Times New Roman")
                 sheet["A9"] = rich_text_a9
 
-                rich_text_a10 = CellRichText('Tel/Fax:',TextBlock(InlineFont(rFont='Times New Roman', u='single'),self.order.customer.tel_fax))
-                rich_text_a10.font = Font(size=12, bold=True, name="Times New Roman")
+                rich_text_a10 = CellRichText('Tel/Fax:',TextBlock(InlineFont(rFont='Times New Roman', u='single', sz=12),self.order.customer.tel_fax))
+                rich_text_a10.font = Font(size=14, bold=True, name="Times New Roman")
                 sheet["A10"] = rich_text_a10
 
                 img = Image('logo.png')  # 替换为图片文件的路径
 
                 # 设置图片的宽度和高度
-                img.width = 200  # 设置宽度为100像素
-                img.height = 100  # 设置高度为100像素
+                img.width = 250  # 设置宽度为100像素
+                img.height = 125  # 设置高度为100像素
 
                 sheet.add_image(img, f'B{picture_row + len(order_real_data) + 1}')
                 
@@ -194,6 +211,18 @@ class OrderPIProcessor:
                             for placeholder, actual_value in data.items():
                                 if placeholder in str(cell.value):
                                     cell.value = str(cell.value).replace(placeholder, actual_value)
+                                    
+                                    
+                                    
+                # 最后一个单元格的金额样式调整
+                sheet[f"E{total_row-1}"].alignment = Alignment(horizontal='right', vertical='center')
+                sheet["A1"].font = font24_bold
+                sheet["E8"].font = font12_underline
+                sheet["E9"].font = font12_underline
+                sheet["E10"].font = font12_underline
+                sheet.row_dimensions[total_row].height =sheet.row_dimensions[total_row-1].height
+                
+                        
 
         # 保存Excel文件
         workbook.save(self.file_name)
