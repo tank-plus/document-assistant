@@ -31,7 +31,7 @@ class OrderPIProcessor:
         self.template = template
         
     @property
-    def file_name(self):
+    def target_file_name(self):
         return self.file_name
     
     def transfer_order_data(self):
@@ -41,7 +41,8 @@ class OrderPIProcessor:
             if pi_category not in order_real_data:
                 order_real_data[pi_category] = []
             
-            order_real_data[pi_category].append([order_detail.product_id, 
+            order_real_data[pi_category].append([pi_category,
+                                                 order_detail.product_id, 
                                                  f"{order_detail.qty}PCS/{order_detail.ctns}CTNS", 
                                                  order_detail.unit_price, 
                                                  order_detail.total_price])
@@ -50,7 +51,8 @@ class OrderPIProcessor:
             if pi_category not in order_real_data:
                 order_real_data[pi_category] = []
             
-            order_real_data[pi_category].append([part_detail.product_id, 
+            order_real_data[pi_category].append([pi_category,
+                                                 part_detail.product_id, 
                                                  f"{part_detail.qty}PCS/{part_detail.ctns}CTNS", 
                                                  part_detail.unit_price, 
                                                  part_detail.total_price])
@@ -83,7 +85,7 @@ class OrderPIProcessor:
                     for key, value in order_real_data.items():
                         data_rows += len(value)
                         for record in value:
-                            total_amount += float(record[3])
+                            total_amount += float(record[4])
 
                     print(f"data_rows:{data_rows}")
 
@@ -105,6 +107,7 @@ class OrderPIProcessor:
                         print(e)
 
                 start_row = description_row + 2
+                catogery_row_pair = []
                 for key, records in order_real_data.items():
                     for i, data_row in enumerate(records, start=start_row):
                         for j, value in enumerate(data_row, start=1):
@@ -113,9 +116,15 @@ class OrderPIProcessor:
                             cell.border = thin_border
                             cell.number_format = '$#,##0.00'
                             cell.font = font10_common
+                    catogery_row_pair.append((start_row, start_row + len(records) - 1))
                     start_row += len(records)
+                    
+                
 
-                total_row = description_row + 2 + len(order_real_data)
+                total_row = description_row + 2 + len(order_real_data) + 1
+                
+                # 最后一个单元格的金额样式调整
+                sheet[f"E{total_row-1}"].alignment = Alignment(horizontal='left', vertical='center')
 
                 print(f"total_row:{total_row}")
 
@@ -135,14 +144,15 @@ class OrderPIProcessor:
 
                 sheet.cell(row=total_row + 1, column=2, value=number_to_words(total_amount))
                 sheet.merge_cells(f"B{total_row + 1}:E{total_row + 1}")
-                cell = sheet[f'B{total_row + 2}']
+                # cell = sheet[f'B{total_row + 2}']
                 cell.alignment = Alignment(horizontal='center', vertical='center')
                 cell.border = thin_border
 
-                # TODO 类别相关的列合并
-                sheet.merge_cells(f"A{description_row + 2}:A{description_row + 1 + len(order_real_data)}")
-                cell_new = sheet[f"A{description_row + 2}"]
-                cell_new.alignment = Alignment(horizontal='center', vertical='center')
+                # 类别相关的列合并
+                for (start, end) in catogery_row_pair:
+                    sheet.merge_cells(f"A{start}:A{end}")
+                    cell_new = sheet[f"A{start}"]
+                    cell_new.alignment = Alignment(horizontal='center', vertical='center')
 
                 rich_text_a8 = CellRichText('To:', TextBlock(InlineFont(rFont='Times New Roman', u='single'), self.order.customer.customer_id))
                 rich_text_a8.font = Font(size=12, bold=True, name="Times New Roman")
@@ -170,7 +180,7 @@ class OrderPIProcessor:
                 data["{{pi_num}}"] = self.order.pi_num
                 data["{{po_num}}"] = self.order.po_num
                 data["{{po_date}}"] = self.order.po_date.strftime("%Y-%m-%d")
-                data["{{customer_name}}"] = "To: " + self.order.customer.customer_name
+                data["{{customer_name}}"] = "To: " + self.order.customer.customer_id
                 data["{{customer_address}}"] = "Add: " + self.order.customer.address
                 data["{{customer_tel_fax}}"] = "Tel/Fax: " + self.order.customer.tel_fax
                 data["{{payment_method}}"] = self.order.payment_method
