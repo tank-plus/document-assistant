@@ -32,7 +32,7 @@ class OrderPIProcessor:
         
     @property
     def target_file_name(self):
-        return self.file_name
+        return self.file_name.replace("./","/")
     
     def transfer_order_data(self):
         order_real_data = {}

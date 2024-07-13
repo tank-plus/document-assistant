@@ -188,8 +188,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <a href="" class="text-success">附件 <i class="fas fa-file-excel"></i> PO#6123.xlsx</a>
+                                    <td colspan="2" id="file-download">
+                                        <!-- <a href="" class="text-success">附件 <i class="fas fa-file-excel"></i> PO#6123.xlsx</a> -->
                                     </td>
                                 </tr>
 
@@ -202,7 +202,26 @@
                     <div class="row no-print">
                         <div class="col-12">
                             <!-- <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a> -->
-                            <button type="button" class="btn btn-primary float-right">确认订单</button>
+                            <button type="button" class="btn btn-primary float-right" id="btn-confirm" data-order="{{order.po_num}}">确认订单</button>
+                            <script>
+                                $('#btn-confirm').click(function() {
+                                    var order_num = $(this).data('order');
+                                    $.ajax({
+                                        url: '/order/'+ order_num +'/confirm',
+                                        type: 'POST',
+                                        success: function(res) {
+                                            if (res.code == 200) {
+                                                alert('订单确认成功！');
+                                                // window.location.href = '/orders';
+                                                $("#file-download").empty().append('<a href="'+ res.data.file_path +'" class="text-success">附件 <i class="fas fa-file-excel"></i> PO#' + order_num + '.xlsx</a>');
+                                            } else {
+                                                alert('订单确认失败！');
+                                            }
+                                        }
+
+                                    });
+                                });
+                            </script>
                             <a href="javascript:window.history.back()" class="btn btn-default float-right" style="margin-right: 5px;">取消</a>
                         </div>
                     </div>

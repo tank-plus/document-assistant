@@ -6,7 +6,7 @@ from core.processor import OrderPIProcessor
 
 order_ns = Namespace('order', description='Order related operations')
 
-@order_ns.route('/<string:order_id>')
+@order_ns.route('/<string:order_id>/confirm')
 class OrderConfirm(Resource):
 
     @order_ns.doc('confirm_order')
@@ -24,4 +24,4 @@ class OrderConfirm(Resource):
         order_process = OrderPIProcessor(order)
         order_process.process()
         
-        return {"file_path": order_process.file_name}
+        return {"file_path": order_process.target_file_name}
