@@ -1,5 +1,5 @@
 from model.db import db
-
+import json
 
 class Product(db.Model):
     id = db.Column(db.String(36), primary_key=True)  # 产品编号
@@ -20,3 +20,26 @@ class Product(db.Model):
 
     def __repr__(self):
         return '<Product %r>' % self.model_id
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'model_category': self.model_category,
+            'unit_price': self.unit_price,
+            'nw_kgs': self.nw_kgs,
+            'gw_kgs': self.gw_kgs,
+            'length': self.length,
+            'width': self.width,
+            'height': self.height,
+            'mt_cmb': self.mt_cmb,
+            'pcs_cnts_ratio': self.pcs_cnts_ratio,
+            'pcs_per_cnt': self.pcs_per_cnt,
+            'hs_code': self.hs_code,
+            'is_parts': self.is_parts,
+            'remarks': self.remarks
+        }
+        
+        
+    def to_json(self):
+        data = self.to_dict()
+        return json.dumps(data)
