@@ -30,10 +30,13 @@ with app.app_context():
 from flask_restx import Api
 from api.order import order_ns
 from api.chatbot import chatbot_ns
+from api.product import product_ns
 
 api = Api(app, version='1.0', title='单证自助系统', description='单证自助系统API')
 api.add_namespace(order_ns)
 api.add_namespace(chatbot_ns)
+api.add_namespace(product_ns)
+
 # 以上是api接口定义
 
 

@@ -36,6 +36,7 @@ class Product(db.Model):
             'pcs_per_cnt': self.pcs_per_cnt,
             'hs_code': self.hs_code,
             'is_parts': self.is_parts,
+            'hs_us_code': self.hs_us_code,
             'remarks': self.remarks
         }
         
