@@ -118,8 +118,8 @@ class OrderPIProcessor:
                 start_row = description_row + 2
                 catogery_row_pair = []
                 for key, records in order_real_data.items():
-                    for i, data_row in enumerate(records, start=start_row):
-                        for j, value in enumerate(data_row, start=1):
+                    for i, data_record in enumerate(records, start=start_row):
+                        for j, value in enumerate(data_record, start=1):
                             cell = sheet.cell(row=i, column=j)
                             cell.value = value
                             cell.border = thin_border
@@ -132,7 +132,7 @@ class OrderPIProcessor:
                     
                 
 
-                total_row = description_row + 2 + len(order_real_data) + 1
+                total_row = description_row + 2 + data_rows
             
 
                 print(f"total_row:{total_row}")

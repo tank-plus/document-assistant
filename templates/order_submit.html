@@ -129,13 +129,13 @@
                                                 var qty = parseInt($(this).val());
                                                 var form_product = $(this).closest(".form-product");
                                                 var content = form_product.find(".product-item option:selected").data("content");
-                                                //alert(JSON.stringify(content));
+                                                // alert(JSON.stringify(content));
                                                 form_product.find(".ctns").val(content.pcs_cnts_ratio * qty);
                                                 form_product.find(".unit_price").val(content.unit_price);
-                                                form_product.find(".total_price").val(content.unit_price * qty);
-                                                form_product.find(".nw_kgs").val(content.nw_kgs * qty);
-                                                form_product.find(".gw_kgs").val(content.gw_kgs * qty);
-                                                form_product.find(".mt_cmb").val(content.mt_cmb * qty);
+                                                form_product.find(".total_price").val((content.unit_price * qty).toFixed(2));
+                                                form_product.find(".nw_kgs").val((content.nw_kgs * qty).toFixed(2));
+                                                form_product.find(".gw_kgs").val((content.gw_kgs * qty).toFixed(2));
+                                                form_product.find(".mt_cmb").val((content.mt_cmb * qty).toFixed(2));
                                             });
                                         });
                                     </script>
@@ -270,6 +270,23 @@
 
                                 <div style="padding-left:20px">
 
+                                    <script>
+                                        $(document).ready(function() {
+                                            $(".part-qty").blur(function() {
+                                                var qty = parseInt($(this).val());
+                                                var form_product = $(this).closest(".form-part");
+                                                var content = form_product.find(".product-item option:selected").data("content");
+                                                // alert(JSON.stringify(content));
+                                                form_product.find(".ctns").val(content.pcs_cnts_ratio * qty);
+                                                form_product.find(".unit_price").val(content.unit_price);
+                                                form_product.find(".total_price").val((content.unit_price * qty).toFixed(2));
+                                                form_product.find(".nw_kgs").val((content.nw_kgs * qty).toFixed(2));
+                                                form_product.find(".gw_kgs").val((content.gw_kgs * qty).toFixed(2));
+                                                form_product.find(".mt_cmb").val((content.mt_cmb * qty).toFixed(2));
+                                            });
+                                        });
+                                    </script>
+
                                     {% for part_form in form.part_details %}
                                         <!--一个配件-->
                                         <div class="form-part">
@@ -295,11 +312,11 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>PCS</label>
-                                                        <input class="form-control form-control-sm qty" type="text"  name="part_details-{{ loop.index0 }}-qty" required data-name="qty"/>
+                                                        <input class="form-control form-control-sm part-qty" type="text"  name="part_details-{{ loop.index0 }}-qty" required data-name="qty"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-ctns" required data-name="ctns"/>
+                                                        <input class="form-control form-control-sm ctns" type="text"  name="part_details-{{ loop.index0 }}-ctns" required data-name="ctns"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -308,7 +325,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-unit_price" data-name="unit_price">
+                                                            <input type="text" class="form-control unit_price" name="part_details-{{ loop.index0 }}-unit_price" data-name="unit_price">
                                                         </div>
                                                         
                                                     </div>
@@ -323,22 +340,22 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-total_price" data-name="total_price">
+                                                            <input type="text" class="form-control total_price" name="part_details-{{ loop.index0 }}-total_price" data-name="total_price">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-nw_kgs" required data-name="nw_kgs"/>
+                                                        <input class="form-control form-control-sm nw_kgs" type="text"  name="part_details-{{ loop.index0 }}-nw_kgs" required data-name="nw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-gw_kgs" required data-name="gw_kgs"/>
+                                                        <input class="form-control form-control-sm gw_kgs" type="text"  name="part_details-{{ loop.index0 }}-gw_kgs" required data-name="gw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-mt_cmb" required data-name="mt_cmb"/>
+                                                        <input class="form-control form-control-sm mt_cmb" type="text"  name="part_details-{{ loop.index0 }}-mt_cmb" required data-name="mt_cmb"/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
