@@ -61,7 +61,8 @@ class ProductLoadDataResource(Resource):
                     is_parts = row[13] == "配件",
                     remarks = row[14]
                 )
-                products.append(product)
+                if not product.query.get(product.id):
+                    products.append(product)
             db.session.add_all(products)
             db.session.commit()
             
