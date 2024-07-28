@@ -88,7 +88,36 @@
                                 <div class="form-group">
                                     <div class="row"> 
                                         <div class="col-md-12">
-                                            <b>商品</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增商品</button>
+                                            <b>商品</b> <button type="button" class="btn btn-sm btn-default btn-add-product" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增商品</button>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $(".btn-add-product").click(function() {
+                                                        var form_product = $(".form-product:last").clone();
+                                                        form_product.find(".product-item").val("");
+                                                        form_product.find(".qty").val("");
+                                                        form_product.find(".ctns").val("");
+                                                        form_product.find(".unit_price").val("");
+                                                        form_product.find(".total_price").val("");
+                                                        form_product.find(".nw_kgs").val("");
+                                                        form_product.find(".gw_kgs").val("");
+                                                        form_product.find(".mt_cmb").val("");
+                                                        form_product.insertAfter($(".form-product:last"));
+
+                                                        refresh_prduct_name_index();
+                                                    });
+                                                });
+
+
+                                                function refresh_prduct_name_index() {
+                                                    $(".form-product").each(function(index) {
+                                                        $(this).find(".form-control").each(function(){
+                                                            var that = $(this);
+                                                            that.attr("name", "order_details-" + index + "-" + that.data("name"));
+                                                        })
+                                                    });
+                                                }
+
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +129,7 @@
                                                 var qty = parseInt($(this).val());
                                                 var form_product = $(this).closest(".form-product");
                                                 var content = form_product.find(".product-item option:selected").data("content");
-                                                alert(JSON.stringify(content));
+                                                //alert(JSON.stringify(content));
                                                 form_product.find(".ctns").val(content.pcs_cnts_ratio * qty);
                                                 form_product.find(".unit_price").val(content.unit_price);
                                                 form_product.find(".total_price").val(content.unit_price * qty);
@@ -118,11 +147,11 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <label>PI Description</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL"/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL" data-name="pi_category"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Model No.</label>
-                                                        <select class="form-control form-control-sm product-item" name="order_details-{{ loop.index0 }}-product_id" required>
+                                                        <select class="form-control form-control-sm product-item" name="order_details-{{ loop.index0 }}-product_id" required data-name="product_id">
                                                             <option value="">请选择产品</option>
                                                             {% for product in products %}
                                                             <option value="{{ product.id }}"  data-content="{{product.to_json()}}">{{ product.id }}</option>
@@ -131,15 +160,15 @@
                                                     </div>  
                                                     <div class="col-md-2">
                                                         <label>产品型号</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-product_model" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="order_details-{{ loop.index0 }}-product_model" required data-name="product_model"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>PCS</label>
-                                                        <input class="form-control form-control-sm qty" type="text"  name="order_details-{{ loop.index0 }}-qty" required/>
+                                                        <input class="form-control form-control-sm qty" type="text"  name="order_details-{{ loop.index0 }}-qty" required data-name="qty"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm ctns" type="text"  name="order_details-{{ loop.index0 }}-ctns" required/>
+                                                        <input class="form-control form-control-sm ctns" type="text"  name="order_details-{{ loop.index0 }}-ctns" required data-name="ctns"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -148,7 +177,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control unit_price" name="order_details-{{ loop.index0 }}-unit_price">
+                                                            <input type="text" class="form-control unit_price" name="order_details-{{ loop.index0 }}-unit_price" data-name="unit_price">
                                                         </div>
                                                         
                                                     </div>    
@@ -164,23 +193,23 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control total_price" name="order_details-{{ loop.index0 }}-total_price">
+                                                            <input type="text" class="form-control total_price" name="order_details-{{ loop.index0 }}-total_price" data-name="total_price">
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm nw_kgs" type="text"  name="order_details-{{ loop.index0 }}-nw_kgs" required/>
+                                                        <input class="form-control form-control-sm nw_kgs" type="text"  name="order_details-{{ loop.index0 }}-nw_kgs" required data-name="nw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm gw_kgs" type="text"  name="order_details-{{ loop.index0 }}-gw_kgs" required/>
+                                                        <input class="form-control form-control-sm gw_kgs" type="text"  name="order_details-{{ loop.index0 }}-gw_kgs" required data-name="gw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm mt_cmb" type="text"  name="order_details-{{ loop.index0 }}-mt_cmb" required/>
+                                                        <input class="form-control form-control-sm mt_cmb" type="text"  name="order_details-{{ loop.index0 }}-mt_cmb" required data-name="mt_cmb"/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
@@ -197,6 +226,7 @@
                                     <script>
                                         $(document).on('click', '.btn-remove-product', function() {
                                             $(this).closest('.form-product').remove();
+                                            refresh_prduct_name_index();
                                         });
                                     </script>
                                 </div>
@@ -206,7 +236,34 @@
                                 <div class="form-group">
                                     <div class="row"> 
                                         <div class="col-md-12">
-                                            <b>配件</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增配件</button>
+                                            <b>配件</b> <button type="button" class="btn btn-sm btn-default btn-add-part" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增配件</button>
+                                            <script>
+                                                $(document).ready(function() {                                                    
+                                                    $(".btn-add-part").click(function() {
+                                                        var form_part = $(".form-part:last").clone();
+                                                        form_part.find(".product-item").val("");
+                                                        form_part.find(".qty").val("");
+                                                        form_part.find(".ctns").val("");
+                                                        form_part.find(".unit_price").val("");
+                                                        form_part.find(".total_price").val("");
+                                                        form_part.find(".nw_kgs").val("");
+                                                        form_part.find(".gw_kgs").val("");
+                                                        form_part.find(".mt_cmb").val("");
+                                                        form_part.insertAfter($(".form-part:last"));
+
+                                                        refresh_part_name_index();
+                                                    });
+                                                });
+
+                                                function refresh_part_name_index() {
+                                                    $(".form-part").each(function(index) {
+                                                        $(this).find(".form-control").each(function(){
+                                                            var that = $(this);
+                                                            that.attr("name", "part_details-" + index + "-" + that.data("name"));
+                                                        })
+                                                    });
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -221,11 +278,11 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <label>PI Description</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL TOPS"/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-pi_category" required value="FIREPLACE MANTEL TOPS" data-name="pi_category"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>Model No.</label>
-                                                        <select class="form-control form-control-sm product-item" name="part_details-{{ loop.index0 }}-product_id" required>
+                                                        <select class="form-control form-control-sm product-item" name="part_details-{{ loop.index0 }}-product_id" required data-name="product_id">
                                                             <option value="">请选择产品</option>
                                                             {% for part in parts %}
                                                             <option value="{{ part.id }}" data-content="{{part.to_json()}}">{{ part.id }}</option>
@@ -234,15 +291,15 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>产品型号</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-product_model" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-product_model" required data-name="product_model"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>PCS</label>
-                                                        <input class="form-control form-control-sm qty" type="text"  name="part_details-{{ loop.index0 }}-qty" required/>
+                                                        <input class="form-control form-control-sm qty" type="text"  name="part_details-{{ loop.index0 }}-qty" required data-name="qty"/>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>CTNS</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-ctns" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-ctns" required data-name="ctns"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
@@ -251,7 +308,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-unit_price">
+                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-unit_price" data-name="unit_price">
                                                         </div>
                                                         
                                                     </div>
@@ -266,22 +323,22 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">$</span>
                                                             </div>
-                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-total_price">
+                                                            <input type="text" class="form-control" name="part_details-{{ loop.index0 }}-total_price" data-name="total_price">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>N.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-nw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-nw_kgs" required data-name="nw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>G.W.(KGS)</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-gw_kgs" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-gw_kgs" required data-name="gw_kgs"/>
                                                         
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label>M.T.(CBM）</label>
-                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-mt_cmb" required/>
+                                                        <input class="form-control form-control-sm" type="text"  name="part_details-{{ loop.index0 }}-mt_cmb" required data-name="mt_cmb"/>
                                                         
                                                     </div>
                                                     <div class="col-md-1">
@@ -297,6 +354,7 @@
                                     <script>
                                         $(document).on('click', '.btn-remove-part', function() {
                                             $(this).closest('.form-part').remove();
+                                            refresh_part_name_index();
                                         });
                                     </script>
                                 </div>
@@ -306,48 +364,74 @@
                                 <div class="form-group">
                                     <div class="row"> 
                                         <div class="col-md-12">
-                                            <b>托盘</b> <button type="button" class="btn btn-sm btn-default" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增托盘</button>
+                                            <b>托盘</b> <button type="button" class="btn btn-sm btn-default btn-add-pallet" style="margin-left: 10px;"><i class="fa fa-plus"></i> 新增托盘</button>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $(".btn-add-pallet").click(function() {
+                                                        var form_pallet = $(".form-pallet:last").clone();
+                                                        form_pallet.find(".pallet_name").val("");
+                                                        form_pallet.find(".qty").val("");
+                                                        form_pallet.find(".nw_kgs").val("");
+                                                        form_pallet.find(".gw_kgs").val("");
+                                                        form_pallet.find(".length").val("");
+                                                        form_pallet.find(".width").val("");
+                                                        form_pallet.find(".height").val("");
+                                                        form_pallet.find(".mt_cmb").val("");
+                                                        form_pallet.insertAfter($(".form-pallet:last"));
+                                                        refresh_pallet_name_index();
+                                                    });
+                                                });
+
+                                                function refresh_pallet_name_index() {
+                                                    $(".form-pallet").each(function(index) {
+                                                        $(this).find(".form-control").each(function(){
+                                                            var that = $(this);
+                                                            that.attr("name", "pallets-" + index + "-" + that.data("name"));
+                                                        })
+                                                    });
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div style="padding-left:20px">
                                     {% for pallet_form in form.pallets %}
-                                        <div class="form-group">
+                                        <div class="form-group form-pallet">
                                             <div class="row">
                                                 <div class="col-md-1">
                                                     <label>托盘名称</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-pallet_name" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-pallet_name" required data-name="pallet_name"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>PCS</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-qty" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-qty" required data-name="qty"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>N.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-nw_kgs" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-nw_kgs" required data-name="nw_kgs"/>
                                                     
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>G.W.(KGS)</label>
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-gw_kgs" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-gw_kgs" required data-name="gw_kgs"/>
                                                     
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>长</label>    
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-length" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-length" required data-name="length"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>宽</label>    
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-width" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-width" required data-name="width"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>高</label>    
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-height" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-height" required data-name="height"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>M.T.(CBM）</label>    
-                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-mt_cmb" required/>
+                                                    <input class="form-control form-control-sm" type="text"  name="pallets-0-mt_cmb" required data-name="mt_cmb"/>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <label>删除</label>
@@ -362,6 +446,7 @@
                                     <script>
                                         $(document).on('click', '.btn-remove-pallet', function() {
                                             $(this).closest('.form-group').remove();
+                                            refresh_pallet_name_index();
                                         });
                                     </script>
 

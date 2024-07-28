@@ -16,6 +16,7 @@ class OrderDetail(db.Model):
     gw_kgs = db.Column(db.Float, nullable=True)  # 毛重
     mt_cmb = db.Column(db.Float, nullable=True)  # 体积
     pi_category = db.Column(db.String(80), nullable=True)  # PI类别 FIREPLACE MANTEL/FIREPLACE MANTEL TOPS
+    
 
     def __repr__(self):
         return '<OrderDetail %r>' % self.order_id
@@ -59,6 +60,7 @@ class Order(db.Model):
     customer = db.relationship('Customer', backref='orders', lazy=True)  # 客户
     order_details = db.relationship('OrderDetail', backref='order', lazy=True)  # 订单详情
     pallets = db.relationship('Pallet', backref='order', lazy=True)  # 托盘
+    confirm_file = db.Column(db.String(255), nullable=True)  # 确认单文件名
 
     def __init__(self, **kwargs):
         super(Order, self).__init__(**kwargs)

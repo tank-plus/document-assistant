@@ -3,6 +3,7 @@ from core.util import *
 from model.order import Order, OrderDetail, Pallet
 from model.customer import Customer
 from core.processor import OrderPIProcessor
+from model.db import db
 
 order_ns = Namespace('order', description='Order related operations')
 
@@ -23,5 +24,9 @@ class OrderConfirm(Resource):
         order.customer = customer
         order_process = OrderPIProcessor(order)
         order_process.process()
+        order.status = '已确认'
+        order.confirm_file = order_process.target_file_name
+        order.order_details.extend(part_details)
+        db.session.commit()
         
         return {"file_path": order_process.target_file_name}
