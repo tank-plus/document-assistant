@@ -53,7 +53,7 @@ def login():
         if username == "admin" and password == "admin":  # 假设这是你的验证函数
             session['logged_in'] = True
             session['current_user'] = username
-            return redirect(url_for('index'))
+            return redirect(url_for('order.order_list'))
         else:
             pass
     return render_template('login.html')

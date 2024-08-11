@@ -96,7 +96,7 @@ def order_edit(order_id):
     customer = Customer.query.get(order.customer_id)
     order.customer = customer
 
-    return render_template('order_submit.html', form=order, customers=customers, products=products, parts=part_details)
+    return render_template('order_submit.html', form=OrderForm.build_order(order), customers=customers, products=products, parts=part_details)
 
 
 @order_bp.route('/order_submit', methods=['GET', 'POST'])
