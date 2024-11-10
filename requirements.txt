@@ -10,3 +10,4 @@ xlsxwriter
 flask-restx
 pywin32
 pandas
+pdfplumber
